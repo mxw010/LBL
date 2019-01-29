@@ -8,7 +8,7 @@ of  paper that were unhappy."
 
                                                                                         -- Douglas Adams
                                                                                                   
- Rosen sind rot, Veilchen sind blau, du kannst kein Deutsch, das weiß ich genau
+ Rosen sind rot, Veilchen sind blau, du kannst kein Deutsch, das weiß ich genau.
  
                                                                               -- Probably just some gibberish
 
