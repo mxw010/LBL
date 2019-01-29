@@ -1,0 +1,22 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1548702756459.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "DF67DDDD",
+    "lastKnownWriteTime" : 1548712868,
+    "last_content_update" : 1548712868504,
+    "path" : "~/Documents/popfam+/data/Dropbox/LBL/R/LBL_summary.R",
+    "project_path" : "R/LBL_summary.R",
+    "properties" : {
+        "cursorPosition" : "75,4",
+        "scrollLine" : "58"
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

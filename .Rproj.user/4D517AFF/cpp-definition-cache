@@ -1,0 +1,263 @@
+[
+    {
+        "definitions" : [
+            {
+                "column" : 6,
+                "file" : "/Users/chknwng/Dropbox/LBL/src/LBL_init.c",
+                "kind" : 6,
+                "line" : 25,
+                "name" : "R_init_LBL(DllInfo *)",
+                "parent_name" : "",
+                "usr" : "c:@F@R_init_LBL"
+            }
+        ],
+        "file" : "/Users/chknwng/Dropbox/LBL/src/LBL_init.c",
+        "file_last_write" : 1548636317
+    },
+    {
+        "definitions" : [
+            {
+                "column" : 6,
+                "file" : "/Users/chknwng/Dropbox/LBL/src/LBLcac.c",
+                "kind" : 6,
+                "line" : 23,
+                "name" : "LBLmcmc(int *, int *, int *, int *, int *, int *, double *, double *, double *, double *, double *, int *, int *, double *, int *, int *, double *, double *, double *, double *, int)",
+                "parent_name" : "",
+                "usr" : "c:@F@LBLmcmc"
+            },
+            {
+                "column" : 6,
+                "file" : "/Users/chknwng/Dropbox/LBL/src/LBLcac.c",
+                "kind" : 6,
+                "line" : 165,
+                "name" : "update_z_cc(double *, double *, double, int, int *, int **, int, int)",
+                "parent_name" : "",
+                "usr" : "c:@F@update_z_cc"
+            },
+            {
+                "column" : 6,
+                "file" : "/Users/chknwng/Dropbox/LBL/src/LBLcac.c",
+                "kind" : 6,
+                "line" : 211,
+                "name" : "update_beta_cc(int **, double *, int, double, double *, double, int, int *, int, int, int)",
+                "parent_name" : "",
+                "usr" : "c:@F@update_beta_cc"
+            },
+            {
+                "column" : 6,
+                "file" : "/Users/chknwng/Dropbox/LBL/src/LBLcac.c",
+                "kind" : 6,
+                "line" : 259,
+                "name" : "update_freq_cc(double *, double *, double, int, int, int, int, int **, int)",
+                "parent_name" : "",
+                "usr" : "c:@F@update_freq_cc"
+            },
+            {
+                "column" : 8,
+                "file" : "/Users/chknwng/Dropbox/LBL/src/LBLcac.c",
+                "kind" : 6,
+                "line" : 374,
+                "name" : "update_D_cc(double *, double *, double, int, int, int, int, int **, int)",
+                "parent_name" : "",
+                "usr" : "c:@F@update_D_cc"
+            }
+        ],
+        "file" : "/Users/chknwng/Dropbox/LBL/src/LBLcac.c",
+        "file_last_write" : 1526074953
+    },
+    {
+        "definitions" : [
+            {
+                "column" : 6,
+                "file" : "/Users/chknwng/Dropbox/LBL/src/cLBL.c",
+                "kind" : 6,
+                "line" : 24,
+                "name" : "cLBLmcmc(int *, int *, int *, int *, int *, int *, int *, int *, int *, int *, int *, double *, double *, double *, double *, double *, int *, int *, double *, int *, int *, double *, double *, double *, double *, int)",
+                "parent_name" : "",
+                "usr" : "c:@F@cLBLmcmc"
+            },
+            {
+                "column" : 6,
+                "file" : "/Users/chknwng/Dropbox/LBL/src/cLBL.c",
+                "kind" : 6,
+                "line" : 195,
+                "name" : "update_z1(double *, double *, double, int, int *, int *, int **, int **, int, int)",
+                "parent_name" : "",
+                "usr" : "c:@F@update_z1"
+            },
+            {
+                "column" : 6,
+                "file" : "/Users/chknwng/Dropbox/LBL/src/cLBL.c",
+                "kind" : 6,
+                "line" : 231,
+                "name" : "update_z2(double *, double *, double, int, int *, int **, int, int)",
+                "parent_name" : "",
+                "usr" : "c:@F@update_z2"
+            },
+            {
+                "column" : 6,
+                "file" : "/Users/chknwng/Dropbox/LBL/src/cLBL.c",
+                "kind" : 6,
+                "line" : 264,
+                "name" : "update_beta_combined(int **, int **, double *, int, double, double *, double, int, int *, int *, int, int, int, int, int)",
+                "parent_name" : "",
+                "usr" : "c:@F@update_beta_combined"
+            },
+            {
+                "column" : 6,
+                "file" : "/Users/chknwng/Dropbox/LBL/src/cLBL.c",
+                "kind" : 6,
+                "line" : 302,
+                "name" : "update_freq_combined(double *, double *, double, int, int, int, int, int, int, int **, int **, int)",
+                "parent_name" : "",
+                "usr" : "c:@F@update_freq_combined"
+            },
+            {
+                "column" : 8,
+                "file" : "/Users/chknwng/Dropbox/LBL/src/cLBL.c",
+                "kind" : 6,
+                "line" : 396,
+                "name" : "update_D_combined(double *, double *, double, int, int, int, int, int, int, int **, int **)",
+                "parent_name" : "",
+                "usr" : "c:@F@update_D_combined"
+            }
+        ],
+        "file" : "/Users/chknwng/Dropbox/LBL/src/cLBL.c",
+        "file_last_write" : 1526074831
+    },
+    {
+        "definitions" : [
+            {
+                "column" : 6,
+                "file" : "/Users/chknwng/Dropbox/LBL/src/famLBL.c",
+                "kind" : 6,
+                "line" : 19,
+                "name" : "famLBLmcmc(int *, int *, int *, int *, int *, int *, double *, double *, double *, double *, double *, int *, int *, double *, int *, int *, double *, double *, double *, double *, int)",
+                "parent_name" : "",
+                "usr" : "c:@F@famLBLmcmc"
+            },
+            {
+                "column" : 6,
+                "file" : "/Users/chknwng/Dropbox/LBL/src/famLBL.c",
+                "kind" : 6,
+                "line" : 146,
+                "name" : "update_z_fam(double *, double *, double, int, int *, int *, int **, int **, int, int)",
+                "parent_name" : "",
+                "usr" : "c:@F@update_z_fam"
+            },
+            {
+                "column" : 6,
+                "file" : "/Users/chknwng/Dropbox/LBL/src/famLBL.c",
+                "kind" : 6,
+                "line" : 193,
+                "name" : "update_beta_fam(int **, double *, int, double, double *, double, int, int *, int, int, int)",
+                "parent_name" : "",
+                "usr" : "c:@F@update_beta_fam"
+            },
+            {
+                "column" : 6,
+                "file" : "/Users/chknwng/Dropbox/LBL/src/famLBL.c",
+                "kind" : 6,
+                "line" : 233,
+                "name" : "update_freq_fam(double *, double *, double, int, int, int, int, int **, int)",
+                "parent_name" : "",
+                "usr" : "c:@F@update_freq_fam"
+            },
+            {
+                "column" : 8,
+                "file" : "/Users/chknwng/Dropbox/LBL/src/famLBL.c",
+                "kind" : 6,
+                "line" : 341,
+                "name" : "update_D_fam(double *, double *, double, int, int, int, int, int **, int)",
+                "parent_name" : "",
+                "usr" : "c:@F@update_D_fam"
+            }
+        ],
+        "file" : "/Users/chknwng/Dropbox/LBL/src/famLBL.c",
+        "file_last_write" : 1526074889
+    },
+    {
+        "definitions" : [
+            {
+                "column" : 8,
+                "file" : "/Users/chknwng/Dropbox/LBL/src/util.c",
+                "kind" : 6,
+                "line" : 21,
+                "name" : "update_lambda(double *, double, double, int)",
+                "parent_name" : "",
+                "usr" : "c:@F@update_lambda"
+            },
+            {
+                "column" : 8,
+                "file" : "/Users/chknwng/Dropbox/LBL/src/util.c",
+                "kind" : 6,
+                "line" : 39,
+                "name" : "calc_den_post(double *, double *, int **, int, double, int, int)",
+                "parent_name" : "",
+                "usr" : "c:@F@calc_den_post"
+            },
+            {
+                "column" : 8,
+                "file" : "/Users/chknwng/Dropbox/LBL/src/util.c",
+                "kind" : 6,
+                "line" : 53,
+                "name" : "sum(double *, int)",
+                "parent_name" : "",
+                "usr" : "c:@F@sum"
+            },
+            {
+                "column" : 8,
+                "file" : "/Users/chknwng/Dropbox/LBL/src/util.c",
+                "kind" : 6,
+                "line" : 65,
+                "name" : "find_min(double *, int)",
+                "parent_name" : "",
+                "usr" : "c:@F@find_min"
+            },
+            {
+                "column" : 8,
+                "file" : "/Users/chknwng/Dropbox/LBL/src/util.c",
+                "kind" : 6,
+                "line" : 77,
+                "name" : "gen_double_exp(double, double)",
+                "parent_name" : "",
+                "usr" : "c:@F@gen_double_exp"
+            },
+            {
+                "column" : 6,
+                "file" : "/Users/chknwng/Dropbox/LBL/src/util.c",
+                "kind" : 6,
+                "line" : 96,
+                "name" : "dirichlet(double *, int, double *, int)",
+                "parent_name" : "",
+                "usr" : "c:@F@dirichlet"
+            },
+            {
+                "column" : 8,
+                "file" : "/Users/chknwng/Dropbox/LBL/src/util.c",
+                "kind" : 6,
+                "line" : 124,
+                "name" : "calc_a(double *, int *, int, double)",
+                "parent_name" : "",
+                "usr" : "c:@F@calc_a"
+            },
+            {
+                "column" : 6,
+                "file" : "/Users/chknwng/Dropbox/LBL/src/util.c",
+                "kind" : 6,
+                "line" : 165,
+                "name" : "getWts(int *, int *, double *, double *)",
+                "parent_name" : "",
+                "usr" : "c:@F@getWts"
+            }
+        ],
+        "file" : "/Users/chknwng/Dropbox/LBL/src/util.c",
+        "file_last_write" : 1548631097
+    },
+    {
+        "definitions" : [
+        ],
+        "file" : "/Users/chknwng/Dropbox/LBL/src/util.h",
+        "file_last_write" : 1548631113
+    }
+]
