@@ -6,7 +6,7 @@ pretty much of the time. Many solutions were suggested for this problem, but mos
 with the movement of small green pieces of paper, which was odd because on the whole it wasn't the small green pieces
 of  paper that were unhappy."
 
-                                                                                                -- Douglas Adams
+                                                                                        -- Douglas Adams
                                                                                                   
  Rosen sind rot, Veilchen sind blau, du kannst kein Deutsch, das weiß ich genau
                                                                                          -- Probably just some gibberish
