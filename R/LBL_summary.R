@@ -75,8 +75,18 @@ LBL_summary <- function(output, a=15,b=15,e=0.1, ci.level=0.95){
   	return(bf)
   	}
   )
+
+  #Changed by Xiaofei
+  result1<-data.frame(output$haplo.names,freq.est,
+                      stringsAsFactors = F)
+  result2<-data.frame(beta.est,t(beta.ci),BF,
+                      stringsAsFactors = F)
+  result<-merge(result1,result2,by=0,all=T)
+  result<-result[,-1]
+  colnames(result)<-c("Hap","Freq","OR","OR Lower", "OR Upper", "BF")
+
   #BF[BF==999] <-">100"
-  result<-list(haplotypes=output$haplo.names, OR=beta.est, OR.CI=t(beta.ci), BF=BF)
+  #result<-list(haplotypes=output$haplo.names, OR=beta.est, OR.CI=t(beta.ci), BF=BF)
   return(result)
 }
 
