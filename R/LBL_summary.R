@@ -87,8 +87,8 @@ LBL_summary <- function(output, a=15,b=15,e=0.1, ci.level=0.95){
                       stringsAsFactors = F)
   #significance
   result2$Significance<- rep("", nrow(result2))
-  result2$Sginificance[result2[,2] > 1 & result2[,4] >2] < -"*+"
-  result2$Sginificance[result2[,3] < 1 & result2[,4] >2] < -"*-"
+  result2$Sginificance[result2[,2] > 1 & result2[,4] >2] <-"*+"
+  result2$Sginificance[result2[,3] < 1 & result2[,4] >2] <-"*-"
 
   result<-merge(result1,result2,by=0,all=T)
   result<-result[,-1]
