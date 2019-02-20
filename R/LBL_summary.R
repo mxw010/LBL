@@ -33,6 +33,10 @@
 #' \item{BF}{Bayes Factor estimates based on posterior samples.
 #'  if the posterior samples are all greater than e, then BF is set to be 999.}
 #'
+#' \item{Significance}{Denotes the significance level of a haplotype. “*+” denotes a risk haplotype (\eqn{theta > 0},
+#'  confidence interval of \eqn{theta} does not include 0, and BF >2). “*-” denotes a protective haplotype (\eqn{theta < 0},
+#'  confidence interval of \eqn{theta} does not include 0, and BF >2). No labels indicates the haplotype is not sifnigicant.}
+#'
 #'}
 #'
 #' @references
@@ -81,12 +85,15 @@ LBL_summary <- function(output, a=15,b=15,e=0.1, ci.level=0.95){
                       stringsAsFactors = F)
   result2<-data.frame(beta.est,t(beta.ci),BF,
                       stringsAsFactors = F)
+  #significance
+  result2$Significance<- rep("", nrow(result2))
+  result2$Sginificance[result2[,2] > 1 & result2[,4] >2] < -"*+"
+  result2$Sginificance[result2[,3] < 1 & result2[,4] >2] < -"*-"
+
   result<-merge(result1,result2,by=0,all=T)
   result<-result[,-1]
-  colnames(result)<-c("Hap","Freq","OR","OR Lower", "OR Upper", "BF")
+  colnames(result)<-c("Hap","Freq","OR","OR Lower", "OR Upper", "BF", "Significance")
 
-  #BF[BF==999] <-">100"
-  #result<-list(haplotypes=output$haplo.names, OR=beta.est, OR.CI=t(beta.ci), BF=BF)
   return(result)
 }
 

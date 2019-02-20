@@ -22,17 +22,17 @@ double update_D_combined(double *freq, double *beta, double D, int x_length, int
 
 int **uniq_x_mat, *y_new1, *y_new2, total_freq_update=0;
 void cLBLmcmc(int *x1, int *x2, int *tot_hap1, int *tot_hap2, int *y1, int *y2, int *N1, int *N2, int *num_haplo_id1, int *num_haplo_id2, int *x_length, double *freq, double *D, double *beta, double *a, double *b, int *uniq_x, int *tot_uniq_x, double *lambda, int *NUM_IT, int *BURN_IN, double *beta_out, double *lambda_out, double *freq_out, double *D_out) {
-    
+
   int i, j, k, l, m, n, ***xhaplo1, ***xhaplo2, **xz1, **xz2, x1_mat[*tot_hap1][*x_length],
       x2_mat[*tot_hap2][*x_length], n_cases1=0, n_cases2=0, which_beta, it=0, it1=0, it2=0, heat_it;
   //storing the proposed values
   //double * prop_freq_with_last;
 
   //prop_freq_with_last=calloc(*x_length+1,sizeof(double));
-  
+
   //FILE* f_freq;
   //    FILE* f_prop;
-  Rprintf("running cLBL\n...");
+  Rprintf("running cLBL...\n");
   y_new1=calloc(*N1, sizeof(int));
   y_new2=calloc(*N2, sizeof(int));
   xhaplo1=calloc(*N1, sizeof(int*));
@@ -117,12 +117,12 @@ void cLBLmcmc(int *x1, int *x2, int *tot_hap1, int *tot_hap2, int *y1, int *y2, 
     }
   }
   /********************** start MCMC here ***************************/
-  
-  
+
+
   /*exactly what is going on with the frequency??*/
   //f_freq=fopen("freq.txt","r");
   //f_prop=fopen("freq_prop","r");
-  
+
   heat_it=0; /* tracks # of heating iterations */
   for(n=0;n<*NUM_IT;++n) {
     heat_it=heat_it+1;
@@ -150,7 +150,7 @@ void cLBLmcmc(int *x1, int *x2, int *tot_hap1, int *tot_hap2, int *y1, int *y2, 
     /* update lambda */
     *lambda=update_lambda(beta, *a, *b, *x_length);
 
- 
+
           for (i=0;i<*x_length;i++) {
     //  fprintf(f_freq,"%e ", freq[i]);
     }
@@ -159,21 +159,21 @@ void cLBLmcmc(int *x1, int *x2, int *tot_hap1, int *tot_hap2, int *y1, int *y2, 
 
     /* update frequencies and D */
     update_freq_combined(freq, beta, *D, *x_length, *N1, *N2, n_cases1, n_cases2, *tot_uniq_x, xz1, xz2,n);
-     
+
         //  for (i=0;i<*x_length;i++) {
     //  fprintf(f_prop,"%e ", prop_freq_with_last[i]);
     //}
     //fprintf(f_prop, "%e\n", prop_freq_with_last[*x_length+1]);
 
-    
+
     /* update D parameter */
     *D=update_D_combined(freq, beta, *D, *x_length, *N1, *N2, n_cases1, n_cases2, *tot_uniq_x, xz1, xz2);
-  
+
     /* add some updates every 5000 iterations */
    // if (monitor == 1) {
    //   if ( (n+1) % 5000 == 0) Rprintf("Running iteration %d...\n", n+1);
    // }
-  
+
     if(n>=*BURN_IN) {
       for(i=0;i<*x_length;++i) {
         beta_out[it]=beta[i];
@@ -312,7 +312,7 @@ void update_freq_combined(double *freq, double *beta, double D, int x_length, in
   /*prosing new frequencies, stored in prop_freq_with_last)*/
   dirichlet(b_old, x_length+1, prop_freq_with_last,n);
 
-  
+
   min_f_old=find_min(freq, x_length+1);
   /* check if the constraint -min fk/(1-min fk) < d is satisfied */
   min_f_new=find_min(prop_freq_with_last, x_length+1);
@@ -328,7 +328,7 @@ void update_freq_combined(double *freq, double *beta, double D, int x_length, in
           Rprintf("%e, ", prop_freq_with_last[i]);
         }
         Rprintf("%e)\n",prop_freq_with_last[x_length+1]);
-      
+
 
         Rprintf("old_freq*C=(");
                                 for(i=0;i<x_length;++i) {
@@ -347,9 +347,9 @@ void update_freq_combined(double *freq, double *beta, double D, int x_length, in
     }
     /* calculate g(f^(t)) and g(f*) */
     g_old=-calc_den_post(beta, freq, uniq_x_mat, x_length, D, n_cases1+n_cases2, tot_uniq_x)+log(1-min_f_old);
-      
+
     g_new_temp=calc_den_post(beta, prop_freq_with_last, uniq_x_mat, x_length, D, n_cases1+n_cases2, tot_uniq_x);
-      
+
     g_new=-g_new_temp+log(1-min_f_new);
     if(g_new_temp<-pow(10, 10)) Rprintf(
         "Warning 2: iternation %d, calc_den_new = %e, g_old = %lf, g_new = %lf\n",n, g_new_temp, g_old, g_new);
@@ -371,7 +371,7 @@ void update_freq_combined(double *freq, double *beta, double D, int x_length, in
     }
     accept_prob=exp(g_new-g_old+f_old-f_new);
     if(-min_f_new/(1-min_f_new)>D) accept_prob=0;
-    
+
      if(accept_prob>1) update=1;
      else update=rbinom(1, accept_prob);
     if(update==1) {

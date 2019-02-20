@@ -1,6 +1,5 @@
 #include <stdlib.h> // for NULL
 #include <R_ext/Rdynload.h>
-#include <util.h>
 
 /* FIXME: 
    Check these declarations against the C/Fortran source code.

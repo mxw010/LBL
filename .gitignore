@@ -2,3 +2,8 @@ inst/doc
 LBL.Rproj
 ^.*\
 ^\.Rproj\.user$
+.Rproj.user/
+.DS_Store
+.Rhistory
+.RData
+.Rproj.user
