@@ -37,10 +37,6 @@ A list with the following components:
 \item{BF}{Bayes Factor estimates based on posterior samples.
  if the posterior samples are all greater than e, then BF is set to be 999.}
 
-\item{Significance}{Denotes the significance level of a haplotype. “*+” denotes a risk haplotype (\eqn{theta > 0},
- confidence interval of \eqn{theta} does not include 0, and BF >2). “*-” denotes a protective haplotype (\eqn{theta < 0},
- confidence interval of \eqn{theta} does not include 0, and BF >2). No labels indicates the haplotype is not sifnigicant.}
-
 }
 }
 \description{

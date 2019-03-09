@@ -81,16 +81,16 @@ If \code{summary = FALSE}, return a list with the following components:
 If \code{summary = TRUE}, return the result of LBL_summary. For details, see \code{?LBL_summary}.
 }
 \description{
-\code{LBLcac} is a Bayesian LASSO method developed for detecting association between
+\code{LBLcac} is a Bayesian LASSO method developed to detect association between
 common/rare haplotypes and dichtomous disease phenotype, based on MCMC algorithm.
 The "cac" in the title stands for "case and control", as this function will handle
-independent cases and controls study design. For other type of study designs, see \code{\link{LBLfam}} and
+independent cases and controls study design. For other types of study designs, see \code{\link{LBLfam}} and
 \code{\link{LBLcombined}}. This function takes standard pedigree format as input with an individual's
 genotypes, phenotype and familiar relationships, uses
 an algorithm developed by Burkett \emph{et al}. to impute possible haplotype configurations
 (for more detail, see \href{https://www.rdocumentation.org/packages/hapassoc/versions/0.5-1/topics/pre.hapassoc}{pre.hapassoc} from \pkg{hapassoc} package).
 The input does not allow missing observations, and therefore subjects with
-missing data are removed. This fucntion return an object containing summary statistics
+missing data are removed. This fucntion returns an object containing summary statistics
 for all haplotypes present in the data.
 }
 \examples{

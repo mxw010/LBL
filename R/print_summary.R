@@ -1,6 +1,6 @@
 #' Posterior Inference for LBL
 #'
-#' \code{print_LBL_summary} Print LBL result summary
+#' \code{print_summary} Print LBL result summary
 #'
 #' @references
 #' Biswas S, Lin S (2012). Logistic Bayesian LASSO for Identifying
@@ -10,8 +10,8 @@
 #'
 
 
-print_LBL_summary <- function (LBL_summary_object){
-  
+print_summary <- function (LBL_summary_object){
+
   result1 <- data.frame(LBL_summary_object$haplotypes, LBL_summary_object$freq,
                         stringsAsFactors = F)
   result2 <- data.frame(LBL_summary_object$OR, LBL_summary_object$OR.CI,
@@ -22,15 +22,15 @@ print_LBL_summary <- function (LBL_summary_object){
   result2$Significance[result2[, 3] < 1 & result2[, 4] > 2] <- "*-"
   result <- merge(result1, result2, by = 0, all = T)
   result <- result[, -1]
-  
+
   #Xiaofei: changes made
   result$Significance[is.na(result$Significance)]<-""
-  colnames(result) <- c("Hap", "Freq", "OR", "OR Lower", "OR Upper", 
+  colnames(result) <- c("Hap", "Freq", "OR", "OR Lower", "OR Upper",
                         "BF", "")
-  
+
   print(result)
   cat("---\n")
   cat("Signif.codes: Risk '*+' Protective '*-' Not significant ' ' \n\n")
-  
+
 }
 

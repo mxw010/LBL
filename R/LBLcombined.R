@@ -1,11 +1,11 @@
 #' Bayesian Lasso for detecting Rare (or Common) Haplotype Association in Population or Family Based Studies
 #'
-#' \code{LBLcombined} MCMC algorithm to obtain a posterior samples. This function
+#' \code{LBLcombined} is an MCMC algorithm that generates posterior samples for a dataset containing both case-control and family trio designs. This function
 #' takes standard pedigree format as input, and calls \href{https://www.rdocumentation.org/packages/hapassoc/versions/0.5-1/topics/pre.hapassoc}{pre.hapassoc}
 #' function from \pkg{hapassoc} package to impute the (phased) haplotypes of individuals.
 #' The input does not allow missing observations and subjects with
-#' missing data are removed. The fucntion return an object containing posterior
-#' samples based on Markov Chain Monte Carlo algorithm after the burnin period.
+#' missing data are removed. The fucntion returns an object containing posterior
+#' samples based on Markov Chain Monte Carlo algorithm after the burn-in period.
 #'
 #' @param data.fam the family portion of data. If "type" is "fam" or "combined",
 #'   this arugment is required. If "type" is "cac",then this arugment is
