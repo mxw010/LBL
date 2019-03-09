@@ -33,10 +33,6 @@
 #' \item{BF}{Bayes Factor estimates based on posterior samples.
 #'  if the posterior samples are all greater than e, then BF is set to be 999.}
 #'
-#' \item{Significance}{Denotes the significance level of a haplotype. “*+” denotes a risk haplotype (\eqn{theta > 0},
-#'  confidence interval of \eqn{theta} does not include 0, and BF >2). “*-” denotes a protective haplotype (\eqn{theta < 0},
-#'  confidence interval of \eqn{theta} does not include 0, and BF >2). No labels indicates the haplotype is not sifnigicant.}
-#'
 #'}
 #'
 #' @references
@@ -74,26 +70,13 @@ LBL_summary <- function(output, a=15,b=15,e=0.1, ci.level=0.95){
   # }
   #this is SLIGHTLY faster than the older implementation
   BF <- apply(beta.out,2, function(x)  {
-  	temp <- sum(abs(x) > e)
-  	bf <- ifelse(temp < nreps, temp/(nreps-temp)/(prior.prob/(1-prior.prob)),999)
-  	return(bf)
-  	}
+    temp <- sum(abs(x) > e)
+    bf <- ifelse(temp < nreps, temp/(nreps-temp)/(prior.prob/(1-prior.prob)),999)
+    return(bf)
+  }
   )
-
-  #Changed by Xiaofei
-  result1<-data.frame(output$haplo.names,freq.est,
-                      stringsAsFactors = F)
-  result2<-data.frame(beta.est,t(beta.ci),BF,
-                      stringsAsFactors = F)
-  #significance
-  result2$Significance<- rep("", nrow(result2))
-  result2$Significance[result2[,2] > 1 & result2[,4] >2] <-"*+"
-  result2$Significance[result2[,3] < 1 & result2[,4] >2] <-"*-"
-
-  result<-merge(result1,result2,by=0,all=T)
-  result<-result[,-1]
-  colnames(result)<-c("Hap","Freq","OR","OR Lower", "OR Upper", "BF", "Significance")
-
+  #XF: added frequency
+  result<-list(haplotypes=output$haplo.names, freq=freq.est,
+               OR=beta.est, OR.CI=t(beta.ci), BF=BF)
   return(result)
 }
-
