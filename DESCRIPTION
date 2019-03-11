@@ -22,3 +22,25 @@ Imports: stats, utils
 Suggests: knitr,
     rmarkdown
 VignetteBuilder: knitr, rmarkdown
+=======
+Package: LBL
+Type: Package
+Title: Logistic Bayesian Lasso for identifying genetic association between common diseases and rare haplotypes
+Version: 0.9.0
+Authors@R: as.person(c("Meng Wang <cherrywang1006@gmail.com> [aut, cre]", "Xiaofei Zhou <zhou.1150@buckeyemail.osu.edu> [ctb]"))
+Description: LBL puts a double exponential prior on the regression coefficients, effectively penalizing
+    unassociated hapltoypes while enhancing the stability and accuracy of the rare
+    haplotypes.LBL is capable of handling different study designs: this versio of the software is capable
+    of handling independent cases and control, case-parent trios and a mixture of both (provided
+    that the family data is independent from the population data). LBL does not provide haplotype
+    imputation. Instead, the imputation is handled by \pkg{\link[hapassoc:pre.hapassoc]{hapassoc}}
+    package.
+Depends: R (>= 3.0.0)
+License: GPL-3
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 6.1.1
+Imports: stats, utils
+Suggests: knitr,
+    rmarkdown
+VignetteBuilder: knitr, rmarkdown
