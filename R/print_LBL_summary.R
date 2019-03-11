@@ -10,7 +10,7 @@
 #'
 
 
-print_LBL_summary <- function (LBL_summary_object){
+print_LBL_summary <- function(LBL_summary_object){
   
   result1 <- data.frame(LBL_summary_object$haplotypes, LBL_summary_object$freq,
                         stringsAsFactors = F)
