@@ -1,6 +1,6 @@
 #' Posterior Inference for LBL
 #'
-#' \code{print_summary} Print LBL result summary
+#' \code{print_LBL_summary} Print LBL result summary
 #'
 #' @references
 #' Biswas S, Lin S (2012). Logistic Bayesian LASSO for Identifying
@@ -10,13 +10,8 @@
 #'
 
 
-<<<<<<< HEAD:R/print_summary.R
-print_summary <- function (LBL_summary_object){
-
-=======
 print_LBL_summary <- function(LBL_summary_object){
-  
->>>>>>> 45805d45bf79f7be9da3dbb52dabc17270d8f6a1:R/print_LBL_summary.R
+
   result1 <- data.frame(LBL_summary_object$haplotypes, LBL_summary_object$freq,
                         stringsAsFactors = F)
   result2 <- data.frame(LBL_summary_object$OR, LBL_summary_object$OR.CI,
