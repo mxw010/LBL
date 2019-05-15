@@ -325,7 +325,7 @@ void update_freq_fam(double *freq, double *beta, double D, int x_length, int N, 
     error("LBL ran into an error and has stopped\n");
   }
 
-  if ((-min_f_new/(1-min_f_new)  > D) & (accept_prob>0)) {
+  if (-min_f_new/(1-min_f_new)  > D & accept_prob>0) {
     Rprintf("Iteration %d error: in updating f: Min f_new and D constraint violated min_f_new=%f", n_iter, min_f_new);
     Rprintf("current frequncy=(");
     for (i=0; i<x_length; ++i)
