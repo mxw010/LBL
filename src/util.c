@@ -32,6 +32,7 @@ double update_lambda(double *beta, double a, double b, int x_length) {
     PutRNGstate();
     
     return lambda;
+    
 }
 
 /* Calculate log of denominator of the posterior distribution which involves both beta and a(F) parameters; used in updating beta, f, and d */
@@ -73,22 +74,14 @@ double find_min(double *arr, int n){
 }
 
 /* function to generate from double exponential distribution */
-
-double gen_double_exp(double mean, double SD) {
-    double x, gen_exp;
-    
+double gen_double_exp(double mean, double SD){
+    double x, gen_exp, u, b;
     GetRNGstate();
-    //Rprintf("slaps\n");
-    x = runif(0,1);
-    gen_exp = rexp(SD/sqrt(2));
+    x=runif(0, 1);
     PutRNGstate();
-    
-    //Rprintf("gen_double, gen_exp=%f, x=%f, mean=%f, SD=%f\n",x,gen_exp,mean,SD);
-    
-    if(x > 0.5)
-        return gen_exp+mean;
-    else
-        return -gen_exp+mean;
+    b=SD/sqrt(2);
+    if(x>0.5) return mean-b*log(2*(1-x));
+    else return mean+b*log(2*x);
 }
 
 /* function to generate from Dirichet distribution */

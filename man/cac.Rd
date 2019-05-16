@@ -3,8 +3,8 @@
 \docType{data}
 \name{cac}
 \alias{cac}
-\title{An example file consisting of independent case/controls}
-\format{A data frame with 53940 rows and 10 variables:
+\title{An example file consisting of independent cases/controls}
+\format{A data frame with 500 rows and 16 columns:
 \describe{
   \item{column 1}{family ID, integers}
   \item{column 2}{individual ID, integers}
@@ -18,7 +18,7 @@
 cac
 }
 \description{
-A dataset containing the prices and other attributes of almost 54,000
-diamonds.
+A dataset containing the pedigree information, phenotypes and genotypes
+of 500 independent cases and controls.
 }
 \keyword{datasets}

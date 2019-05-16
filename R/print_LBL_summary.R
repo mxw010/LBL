@@ -1,6 +1,6 @@
 #' Posterior Inference for LBL
 #'
-#' \code{print_LBL_summary} Print LBL result summary
+#' \code{print_LBL_summary} Print list result from LBL_summary function in a more legible fashion.
 #'
 #' @references
 #' Biswas S, Lin S (2012). Logistic Bayesian LASSO for Identifying

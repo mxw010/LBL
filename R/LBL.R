@@ -12,15 +12,16 @@
 #' indivdiual's genotype.
 #'
 #' The posterior samples are obtained via Markov Chain Monte Carlo (MCMC)
-#' algorithm and inference on the parameters of interests can be carried out
-#' (Bayes Factor, Confidence Interval, etc.) based on the posterior samples.
+#' algorithm and inference on the parameters of interest can be carried out
+#' (Bayes Factor, Credible Interval, etc.) based on the posterior samples.
 #'
 #' @section Functions:
-#' \code{\link{LBLcac}}  MCMC algorithm to obtain a posterior samples for independent case-control data.
-#' \code{\link{LBLfam}}  MCMC algorithm to obtain a posterior samples for case-parent trio data.
-#' \code{\link{LBLcombined}}  MCMC algorithm to obtain a posterior samples for combined data.
+#' \code{\link{LBLcac}}  MCMC algorithm to obtain posterior samples for independent case-control data.
+#' \code{\link{LBLfam}}  MCMC algorithm to obtain posterior samples for case-parent trio data.
+#' \code{\link{LBLcombined}}  MCMC algorithm to obtain posterior samples for combined data.
 #'
-#' \code{\link{LBL_summary}} Provide model summary based on posterior samples.
+#' \code{\link{LBL_summary}} Provide model summary (in the form of list) based on posterior samples.
+#' \code{\link{print_LBL_summary}} Print model summary in a nice fashion from the list result of \code{\link{LBL_summary}}.
 #'
 #' @docType package
 #' @name LBL

@@ -4,14 +4,12 @@
 #' takes standard pedigree format as input, and uses an algorithm based on
 #' function from \pkg{hapassoc} package to impute the (phased) haplotypes of individuals.
 #' The input does not allow missing observations and subjects with
-#' missing data are removed. The fucntion returns an object containing posterior
+#' missing data are removed. The function returns an object containing posterior
 #' samples based on Markov Chain Monte Carlo algorithm after the burn-in period.
 #'
-#' @param data.fam the family portion of data. If "type" is "fam" or "combined",
-#'   this arugment is required. If "type" is "cac",then this arugment is
-#'   ignored. data.frame takes should consist of "n" rows and 6+2*p columns,
+#' @param data.fam The input data. It should consist of "n" rows and 6+2*p columns,
 #'   where n is the number of individuals of case-parent trios, and p is the
-#'   number of SNPs.  The data should be standard pedigree format, with the
+#'   number of SNPs.  The data should be in standard pedigree format, with the
 #'   first 6 columns representing the family ID, individual ID, father ID,
 #'   mother ID, sex, and affection status. The other 2*p columns are genotype
 #'   data in allelic format, with each allele of a SNP taking up one column.
@@ -58,15 +56,15 @@
 #'
 # @param monitor if true, will monitor the progress of the Markov Chain by
 #'    reporting progress every 5,000 iterations.
-#' @param summary logical; if TRUE, LBLcac will return a summary of the analysis. If FALSE, LBLcac will return the posterior samples of MCMC.
+#' @param summary logical; if TRUE, LBLfam will return a summary of the analysis. If FALSE, LBLfam will return the posterior samples of MCMC.
 #'
 #' @param e a (small) number \eqn{\epsilon} in the null hypothesis of no association,
 #'    \eqn{H_0: |\beta| \le \epsilon}. The default is 0.1. Changing e from default of 0.1 may need choosing a
 #'    different threshold for Bayes Factor (one of the outputs) to infer
 #'    association. Only used if \code{summary = TRUE}.
 #'
-#' @param ci.level Confidence level. The probability that the true value of \eqn{beta} will
-#'    be within the confidence interval. Default is 0.95 which corresponds to a 95\% posterior confidence interval. Only used if \code{summary = TRUE}.
+#' @param ci.level Credible probability. The probability that the true value of \eqn{beta} will
+#'    be within the credible interval. Default is 0.95 which corresponds to a 95\% posterior credible interval. Only used if \code{summary = TRUE}.
 #'
 #'@return If \code{summary = FALSE}, return a list with the following components:
 #' \describe{
@@ -76,7 +74,7 @@
 #'
 #' \item{lambda}{a vector of (num.it-burn.in) posterior samples of lambda.}
 #'
-#' \item{freq}{Posterior samples of the frequency of haplotypes stored in a matrix format, in the same order as haplotypes.}
+#' \item{freq}{Posterior samples of the frequencies of haplotypes stored in a matrix format, in the same order as haplotypes.}
 #'
 #' \item{init.freq}{The haplotype distribution used to initiate the MCMC.}
 #'
@@ -100,6 +98,9 @@
 #' @examples
 #'  data(fam)
 #'  LBLfam(fam)
+#'   fam.obj<-LBLfam(fam)
+#'   fam.obj
+#'   print_LBL_summary(fam.obj)
 #'
 #' @export
 #'

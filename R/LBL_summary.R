@@ -1,10 +1,9 @@
 #' Posterior Inference for LBL
 #'
-#' \code{LBL_summary} Provides inferences based on the posterior samples. Speficially, this function will provide posterior means,
-#' confidence intervals and Bayes Factors (BF) estimates for the haplotypic effect coefficients.
+#' \code{LBL_summary} Provides inferences based on the posterior samples. Specifically, this function will provide posterior means,
+#' credible intervals and Bayes Factors (BF) estimates for the haplotypic effect coefficients.
 #'
-#'
-#' @param output an obect returned by LBL with `summary=FALSE`.
+#' @param output an object returned by LBL with `summary=FALSE`.
 #'
 #' @param a  first hyperparameter of the prior for regression coefficients,
 #'    \eqn{\beta}. The prior variance of \eqn{\beta} is 2/\eqn{\lambda^2} and \eqn{\lambda} has Gamma(a,b)
@@ -19,8 +18,8 @@
 #'    different threshold for Bayes Factor (one of the outputs) to infer
 #'    association.
 #'
-#' @param ci.level Confidence level. The probability that the true value of \eqn{beta} will
-#'    be within the confidence interval. Default is 0.95 which corresponds to a 95\% posterior confidence interval. Only used if `summary = TRUE`.
+#' @param ci.level Credible probability.. The probability that the true value of \eqn{beta} will
+#'    be within the credible interval. Default is 0.95 which corresponds to a 95\% posterior credible interval. Only used if `summary = TRUE`.
 #'
 #' @return A list with the following components:
 #' \describe{

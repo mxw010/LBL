@@ -4,7 +4,7 @@
 \name{fam}
 \alias{fam}
 \title{An example file of case-parent trios}
-\format{A data frame with 60 rows and 16 columns:
+\format{A data frame with 500 rows and 16 columns:
 \describe{
   \item{column 1}{family ID, integers}
   \item{column 2}{individual ID, integers}
@@ -18,7 +18,7 @@
 data(fam)
 }
 \description{
-A dataset containing the pedigree information, phentoyes and gentoypes
-of 20 case-parent trios in pedigree format.
+A dataset containing the pedigree information, phenotypes and genotypes
+of 250 case-parent trios in pedigree format.
 }
 \keyword{datasets}

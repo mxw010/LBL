@@ -1,13 +1,13 @@
 #' An example file of case-parent trios
 #'
-#' A dataset containing the pedigree information, phentoyes and gentoypes
-#' of 20 case-parent trios in pedigree format.
+#'A dataset containing the pedigree information, phenotypes and genotypes
+#' of 250 case-parent trios in pedigree format.
 #'
 #' @usage data(fam)
 #'
 #' @docType data
 #'
-#' @format A data frame with 60 rows and 16 columns:
+#' @format A data frame with 500 rows and 16 columns:
 #' \describe{
 #'   \item{column 1}{family ID, integers}
 #'   \item{column 2}{individual ID, integers}
@@ -20,12 +20,12 @@
 "fam"
 
 
-#' An example file consisting of independent case/controls
+#' An example file consisting of independent cases/controls
 #'
-#' A dataset containing the prices and other attributes of almost 54,000
-#' diamonds.
+#' A dataset containing the pedigree information, phenotypes and genotypes
+#' of 500 independent cases and controls.
 #'
-#' @format A data frame with 53940 rows and 10 variables:
+#' @format A data frame with 500 rows and 16 columns:
 #' \describe{
 #'   \item{column 1}{family ID, integers}
 #'   \item{column 2}{individual ID, integers}

@@ -234,12 +234,12 @@ void update_freq_fam(double *freq, double *beta, double D, int x_length, int N, 
   int i, C=10000, update=0;
   double prop_freq_with_last[x_length+1], g_old, g_new, g_new_temp, accept_prob=0, f_old, f_new, b_old[x_length+1], b_new[x_length+1], min_f_old, min_f_new;
 
-  GetRNGstate();
+  
 
   for (i=0; i<x_length+1; ++i) {
     b_old[i] = freq[i]*C;
   }
-
+  
   dirichlet(b_old, x_length+1, prop_freq_with_last, n_iter);
   min_f_old = find_min(freq, x_length+1);
   
@@ -304,7 +304,11 @@ void update_freq_fam(double *freq, double *beta, double D, int x_length, int N, 
     if (-min_f_new/(1-min_f_new)  > D) accept_prob = 0;
       
      if (accept_prob > 1) update = 1;
-     else update = rbinom(1, accept_prob);
+     else {
+         GetRNGstate();
+         update = rbinom(1, accept_prob);
+         PutRNGstate();
+     }
       
     if (update ==1) {
       for (i=0; i<x_length+1; ++i)
@@ -333,8 +337,6 @@ void update_freq_fam(double *freq, double *beta, double D, int x_length, int N, 
     Rprintf("%f). D=%f.\n", prop_freq_with_last[x_length],D);
     error("LBL ran into an error and has stopped\n");
   }
-
-  PutRNGstate();
 }	 	
 
 	 
@@ -342,17 +344,15 @@ double update_D_fam(double *freq, double *beta, double D, int x_length, int N, i
   int i, update = 0;
   double prop_D, accept_prob, g_old, g_new, min_f, delta=0.05, lower, upper, f_old, f_new;
 
-  GetRNGstate();
-
   min_f = find_min(freq, x_length+1);
   lower = D-delta;
   upper = D+delta;
 
   if (lower < -min_f/(1-min_f)) lower = -min_f/(1-min_f);
   if (upper > 1) upper = 1;
-
+  GetRNGstate();
   prop_D = runif(lower, upper);
- 
+  PutRNGstate();
   g_old = -calc_den_post(beta, freq, uniq_x_mat, x_length, D, n_cases, tot_uniq_x);
   g_new = -calc_den_post(beta, freq, uniq_x_mat, x_length, prop_D, n_cases, tot_uniq_x);
 
@@ -383,12 +383,15 @@ double update_D_fam(double *freq, double *beta, double D, int x_length, int N, i
   }
   
   if (accept_prob > 1) update = 1;
-  else update = rbinom(1, accept_prob);
-
+  else {
+      GetRNGstate();
+      update = rbinom(1, accept_prob);
+      PutRNGstate();
+  }
   if (update == 1) 
     return prop_D;
   else
     return D;
       
-  PutRNGstate();
+
 }

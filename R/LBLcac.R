@@ -2,7 +2,7 @@
 #' Population Based Designs
 #'
 #' \code{LBLcac} is a Bayesian LASSO method developed to detect association between
-#' common/rare haplotypes and dichtomous disease phenotype, based on MCMC algorithm.
+#' common/rare haplotypes and dichotomous disease phenotype, based on MCMC algorithm.
 #' The "cac" in the title stands for "case and control", as this function will handle
 #' independent cases and controls study design. For other types of study designs, see \code{\link{LBLfam}} and
 #' \code{\link{LBLcombined}}. This function takes standard pedigree format as input with an individual's
@@ -10,13 +10,13 @@
 #' an algorithm developed by Burkett \emph{et al}. to impute possible haplotype configurations
 #' (for more detail, see \href{https://www.rdocumentation.org/packages/hapassoc/versions/0.5-1/topics/pre.hapassoc}{pre.hapassoc} from \pkg{hapassoc} package).
 #' The input does not allow missing observations, and therefore subjects with
-#' missing data are removed. This fucntion returns an object containing summary statistics
+#' missing data are removed. This function returns an object containing summary statistics
 #' for all haplotypes present in the data.
 #'
 #' @param data.cac Input data. data.cac should be either a data frame or a matrix,
-#'  consist of "n" rows and 6+2*p
-#'   columns, where n is the number of individuals of case-parent trios, and p
-#'   is the number of SNPs.  The data should be standard pedigree format, with
+#'  consisting of "n" rows and 6+2*p
+#'   columns, where n is the number of cases and controls, and p
+#'   is the number of SNPs.  The data should be in standard pedigree format, with
 #'   the first 6 columns representing the family ID, individual ID, father ID,
 #'   mother ID, sex, and affection status. The other 2*p columns are genotype
 #'   data in allelic format, with each allele of a SNP taking up one column.
@@ -56,15 +56,15 @@
 #' @param num.it total number of MCMC iterations including burn-in; default is
 #'    40000.
 #'
-#' @param summary logical; if \code{TRUE}, LBLcac will return a summary of the analysis. If \code{FALSE}, LBLcac will return the posterior samples for all parameters.
+#' @param summary logical; if \code{TRUE}, LBLcac will return a summary of the analysis in the form of a list. If \code{FALSE}, LBLcac will return the posterior samples for all parameters.
 #'
 #' @param e a (small) number \eqn{\epsilon} in the null hypothesis of no association,
 #'    \eqn{H_0: |\beta| \le \epsilon}. The default is 0.1. Changing e from default of 0.1 may need choosing a
 #'    different threshold for Bayes Factor (one of the outputs) to infer
 #'    association. Only used if \code{summary = TRUE}.
 #'
-#' @param ci.level Confidence level. The probability that the true value of \eqn{beta} will
-#'    be within the confidence interval. Default is 0.95 which corresponds to a 95\% posterior confidence interval. Only used if \code{summary = TRUE}.
+#' @param ci.level Credible probability. The probability that the true value of \eqn{beta} will
+#'    be within the credible interval. Default is 0.95 which corresponds to a 95\% posterior credible interval. Only used if \code{summary = TRUE}.
 #'
 #'@return If \code{summary = FALSE}, return a list with the following components:
 #' \describe{
@@ -74,7 +74,7 @@
 #'
 #' \item{lambda}{a vector of (num.it-burn.in) posterior samples of lambda.}
 #'
-#' \item{freq}{Posterior samples of the frequency of haplotypes stored in a matrix format, in the same order as haplotypes.}
+#' \item{freq}{Posterior samples of the frequencies of haplotypes stored in a matrix format, in the same order as haplotypes.}
 #'
 #' \item{init.freq}{The haplotype distribution used to initiate the MCMC.}
 #'
@@ -97,7 +97,9 @@
 #'
 #' @examples
 #'  data(cac)
-#'  LBLcac(cac)
+#'  cac.obj<-LBLcac(cac)
+#'  cac.obj
+#'  print_LBL_summary(cac.obj)
 #'
 #'
 #' @export
