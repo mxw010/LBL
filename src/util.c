@@ -75,7 +75,7 @@ double find_min(double *arr, int n){
 
 /* function to generate from double exponential distribution */
 double gen_double_exp(double mean, double SD){
-    double x, gen_exp;
+    double x, b;
     GetRNGstate();
     x=runif(0, 1);
     PutRNGstate();
