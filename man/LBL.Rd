@@ -10,13 +10,13 @@ LBL features a Bayesian LASSO model that detects association between
 a phenotype and haplotypes given the (unphased) genotypes of individuals.
 }
 \details{
-LBL imposes a double exponential prior on the regression coefficients, effectively penalizing
-unassociated hapltoypes while enhancing the stability and accuracy of the rare
-haplotypes. LBL is capable of handling different study designs: this version of the software is capable
-of handling independent cases and controls, case-parent trios and a mixture of both (provided
-that the family data is independent from the case-control data). LBL uses algorithms from
+LBL uses Bayesian Lasso to detect rare haplotypes that are associated with common diseases. 
+The current implementation considers dichotomous traits.
+A future release will include quantitative and survival traits.
+LBL is capable of handling different study designs: this version of the software is capable of handling independent cases and controls, case-parent trios and a mixture of both (provided
+that the family data is independent of the case-control data). LBL uses algorithms from
 \pkg{\link[hapassoc:pre.hapassoc]{hapassoc}} to obtain all possible haplotype pairs compatible with an
-indivdiual's genotype.
+indivdiual's set of genotypes.
 
 The posterior samples are obtained via Markov Chain Monte Carlo (MCMC)
 algorithm and inference on the parameters of interest can be carried out
