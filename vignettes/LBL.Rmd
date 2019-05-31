@@ -1,7 +1,5 @@
 ---
 title: 'LBL: Logistic Bayesian LASSO for Detecting Rare Haplotype Associations'
-author: "Meng Wang"
-date: '`r Sys.Date()`'
 output:
   pdf_document:
     highlight: tango
@@ -49,89 +47,83 @@ knitr::opts_chunk$set(
 
 # Introduction
 
-LBL (Logistic Bayesian LASSO) (@biswas2012logistic, @wang2014famlbl) is a Bayesian genetic association test aimed at detecting association between rare *haplotypes* (which could be formed by common SNPs) and diseases. Currently there are three different LBLs that handle different types of study design: one for independent case-control data (LBL, @biswas2012logistic), one for case-parent triad (family trio) data (famLBL, @wang2014famlbl) and one for a combination of data from the two designs (cLBL). LBLs take genotype data as input, impute haplotype distribution for each individual, run an MCMC algorithm, and then provide statistical inferences of the effect of each haplotype based on the posterior samples.
+LBL (Logistic Bayesian LASSO) (@biswas2012logistic, @wang2014famlbl) is a Bayesian genetic association test aimed at detecting association between rare *haplotypes* (which could be formed by common SNPs) and diseases. Currently there are three different LBLs that handle different types of study designs: one for independent case-control data (LBL, @biswas2012logistic), one for case-parent triad (family trio) data (famLBL, @wang2014famlbl) and one for a combination of data from the two designs (cLBL). LBLs take genotype and phenotype (binary traits) data as input, and provide statistical inferences of the effect of each haplotype on the phenotype based on the Markov Chain Monte Carlo samples from the posterior distribution.
 
 <!--Analysis with rare haplotypes can provide additional insight into the mechanism of diseases, but it is more difficult to model and study their effects due to the difficulties in obtaining accurate haplotypes, either via direct haplotyping or imputation, and numerical instability to deal with near 0 frequencies. -->
 
 The rest of the vignette is structured as follows:
 
 - [Methods] section provides some technical details about the algorithm. Users can skip this section should they choose to.
-- [Using LBL] section provides some detailed explanation of how to use the program.
+- [Using LBL] section provides some detailed explanation of how to use the package.
 - [Example] section has a step-by-step guide of applying LBL to a simulated dataset.
 
 
 # Methods
 
-In this section, we provide a short description of the LBL methodology formulation. LBL methods all uses hierachical Bayesian models. The likelihood portions of all LBL methods are formulated with retrsopectively likelihoods, and are connected with disease model via a logistic link. The priors of LBL methods include a double exponential distribution on the haplotyic effect, penalizing the coefficients of non-effective haplotypes, so that effective haplotypes (such as the rare haplotypes with large size) will stand out in the association analysis. This procedure provides similar results as the frequentist LASSO (@lasso) regression. Monte Carlo Markov Chain algorithm (MCMC, @mcmc) is used for computing posterior samples.
+In this section, we provide a short description of the LBL methodology formulation. The likelihood portions of all LBL methods are formulated with retrsopectively likelihoods, and are connected with disease model via a logistic link. The priors of LBL methods include a double exponential distribution on the haplotyic effect, penalizing the coefficients of non-effective haplotypes, so that effective haplotypes (such as the rare haplotypes with large size) will stand out in the association analysis. Monte Carlo Markov Chain algorithm (MCMC, @mcmc) is used to sample from the posterior distribution.
 
-LBL also utlizes the full distribution of all possible haplotypes compatible with an individual: the haplotypes of an individual are merely coefficients in the Bayesian model, updated in each MCMC iteration. This allows us a larger degree of freedom, and it eliminats the need of imuputation and the need to evaluate the effects of incorrect imputation. All haplotype configurations compatible with an individual are obtained with code from package [hapassoc](http://stat.sfu.ca/statgen/research/hapassoc.html).
-
-We first discuss the likelihoods for all three LBL methods, and then the priors, computation and the inferences based on posterior samples. The likelihood formulations of LBLs share some similarities. The priors for the parameters are the same for all three LBL methods. The posterior samples of each LBL can be obtained via MCMC, and posterior inferences can be carried out once the chain has converged. For a more detailed discussion of each method, see the corresponding papers.
+In the following, we first discuss the likelihoods for all three LBL methods, and then the priors, computation, and the inferences based on posterior samples. The likelihood formulations of LBLs share some similarities. All possible haplotypes compatible with observed genotypes are obtained from [hapassoc](http://stat.sfu.ca/statgen/research/hapassoc.html). The priors for the parameters are the same for all three LBL methods. The posterior samples of each LBL can be obtained via MCMC, and posterior inferences can be carried out once the chain has converged. For a more detailed discussion of each method, see the corresponding papers.
 
 ## Likelihood
 
 ### LBL
+Consider a case-control design with $n$ total individuals ($n_1$ cases and $n_2=n-n_1$ controls), who are allgenetically independent of each other and ethnically homogeneous. For each individual $i$, let $G_i$ be the observed genotype, $Z_i$ be the unobserved halotype pair for the $i$-th individual (which can be inferred from $G_i$), $Y_i$ be the binary case-control status of the $i$-th individual, then the complete retrospective likelihood is:
 
-Consider a case-control design with $n$ total individuals, who are allgenetically independent of each other and ethnically homogeneous. For each individual $i$, let $G_i$ be the observed genotype, $Z_i$ be the unobserved halotype pair for the $i$-th individual, $Y_i$ be the binary case-control status of the $i$-th individual, then the complete retrospective likelihood is:
-
-$$L_{cc}(\phi) \propto \prod_{i=1}^{n} P(Z_i \mid Y_i, \phi)P(G_i \mid Z_j) $$
+$$L_{cc}=\prod_{i=1}^{n_1}P(Z_i|Y_i=1,\Psi)  \prod_{i=n_1+1}^{n}P(Z_i|Y_i=0,\Psi)$$
 
 where $\phi$ is a collection of parameters, including individual haplotype effect ($\beta$), haplotype frequencies ($\mathbf{f}$) and other hyperparameters.
 
 ### famLBL
 
-FamLBL has a similar formulation to LBL. For each family $i, i=1,2,\ldots,m$, consider a "matched pair" design where each (affected child, father, mother) trio is decomposed into a pair of haplotypes transmitted to the offspring ($Z_{ic}$), and a pair of haplotype not transmitted to the offspring ($Z_{iu}$). The pair not transmitted can be considered as a pseudo control. Similarly, let $G_{ic}$ and $G_{iu}$ be the corresponding genotypes transmitted or not transmitted. Let $Y_{ic}$ denote the disease status of the offspring ($Y_{ic} = 1$). Then, the likelihood can be formulated as,
+FamLBL has a similar formulation to LBL. For each family $j, j=1,2,\ldots,m$, consider a "matched pair" design where each (affected child, father, mother) trio is decomposed into a pair of haplotypes transmitted to the offspring ($Z_{jc}$), and a pair of haplotypes not transmitted to the offspring ($Z_{ju}$). The pair not transmitted can be considered as a pseudo control. Similarly, let $G_{jc}$ and $G_{ju}$ be the corresponding genotypes transmitted or not transmitted. Let $Y_{jc}$ denote the disease status of the offspring ($Y_{jc} = 1$). Then, the likelihood can be formulated as,
 
-$$L_{\mbox{fam}}(\phi) \propto \prod_{i=1}^m P(Z_{ic} \mid Y_{ic} =1 , \phi) (P(Z_{iu} \mid \phi)) P(G_{ic} \mid Z_{ic}) P(G_{iu} \mid Z_{iu}) $$
+$$L_{t}=\prod_{j=1}^{m} P(Z_{jc}|Y_{jc}=1,\Psi) \times P(Z_{ju}|\Psi) $$
 
 ### cLBL
 
-cLBL combines the independent case-control design and the case-parent triad design. Using notations above, for each independent individual $i$, let $G_i$ be the observed genotype, $Z_i$ be the unobserved halotype, $Y_i$ be the dichotomous case-control status. Suppose there are $n_1$ cases and $n-n_1$ controls, the likelihood function for the case-control portion can be specified as:
+cLBL combines the independent case-control design and the case-parent triad design. With the same notations as in LBL and famLBL, the likelihood is the product of the two previous likelihoods:
 
-$$L_{cc}(\phi) \propto \prod_{i=1}^{n_1}P(Z_i|Y_i=1,\phi) \cdot \prod_{i=n_1+1}^{n}P(Z_i|Y_i=0,\phi) \prod_{i=1}^n P(Z_i \mid G_i)   $$
+$$L_{comb}=L_{cc}(\Psi) \times L_{t}(\Psi)= \prod_{i=1}^{n_1}P(Z_i|Y_i=1,\Psi)  \prod_{i=n_1+1}^{n}P(Z_i|Y_i=0,\Psi) \prod_{j=1}^{m} \left\{P(Z_{jc}|Y_{jc}=1,\Psi) \times P(Z_{ju}|\Psi) \right\}  $$
 
-And the likelihood for the case-parent triad part can be specified as:
 
-$$L_{fam}(\phi) \propto \prod_{i=1}^m P(Z_{ic} \mid Y_{ic} =1 , \phi) (P(Z_{iu} \mid \phi)) P(G_{ic} \mid Z_{ic}) P(G_{iu} \mid Z_{iu}) $$
 
-And the joint likelihood for cLBL is :
 
-$$ L_c(\phi) \propto L_{cc}(\phi) \times L_{fam}(\phi) $$
+
 
 ## Parameters
 
 The aforementioned set of parameters $\phi$ include the following parameters:
 
-* $\beta_j, j=1,2,\ldots,k-1$, the effect of haplotype $j$ compared to the baseline haplotype. This is the parameter of interests.
+* $\beta_l, l=1,2,\ldots,k-1$, the effect of haplotype $l$ compared to the baseline haplotype. This is the parameter of interests.
 
 * $\alpha$, the effect of the baseline haplotype.
 
-* $\mathbf{f} = (f_1,f_2,\ldots,f_m)$, the frequency distribution of all haplotypes present in the dataset.
+* $\mathbf{f} = (f_1,f_2,\ldots,f_k)$, the frequency distribution of all haplotypes present in the dataset.
 
-* $Z = (Z_k,Z_{k'})$, the unobserved haplotype pair an individual has.
+* $Z = (h_l,h_{l'})$, the unobserved haplotype pair an individual has.
 
-* $a_z$, the probability of an individual having haplotype pair $Z=(Z_k,Z_{k'})$.
+* $a_z$, the probability of an individual having haplotype pair $Z=(h_l,h_{l'})$.
 
 * $d$, the inbreeding coefficient. $d=0$ would indicate the population is in Hardy-Weinberg Equilibrium. $d > 0$ would indicate an inbreeding populating and $d < 0$ indicate an outbreeding population.
 
 
 Next we detail the parameters.
 
-We connect $\beta_j$'s with the likelihood through a logistic model. let $\theta$ be the odds of disease given a specific haplotype pair $Z$ (i.e., $\theta=P(Y=1 \mid Z) / P(Y=0 \mid Z)$), then, we model the log odds ratio $\theta$ as,
+We connect $\beta_l$'s with the likelihood through a logistic model. let $\theta$ be the odds of disease given a specific haplotype pair $Z$ (i.e., $\theta=P(Y=1 \mid Z) / P(Y=0 \mid Z)$), then, we model the log odds ratio $\theta$ as,
 
 $$\log \theta = \alpha + X\beta $$
 
 where $X$ is a row vector and each $X$ is the design vector associated with haplotype pair $Z$, and $\alpha$ is log odds of the pre-selected baseline haplotype.
 
-It is worth noting that each $\beta_i$ measures the effect of haplotype $i$ in contrast of the baseline haplotype. Therefore, choosing different baseline haplotypes might result in different $\beta$ values. Only selecting a baseline that is not associated with the disease (i.e., $\alpha = 0$) will yield a correct interpretation. Choosing a haplotype that is associated with the disease might lead to loss of power in detecting other associated haplotypes and false positives. Therefore, one needs to take extra care when choosing the baseline haplotype. One way to avoid such scenarios is to use different baseline haplotypes. By default, the most frequent haplotype is chosen as the baseline.
+It is worth noting that each $\beta_l$ measures the effect of haplotype $l$ in contrast of the baseline haplotype. Therefore, choosing different baseline haplotypes might result in different $\beta$ values. Only selecting a baseline that is not associated with the disease (i.e., $\alpha = 0$) will yield a correct interpretation. Choosing a haplotype that is associated with the disease might lead to loss of power in detecting other associated haplotypes and false positives. Therefore, one needs to take extra care when choosing the baseline haplotype. One way to avoid such scenarios is to use different baseline haplotypes. By default, the most frequent haplotype is chosen as the baseline.
 
 
-Let $\mathbf{f}= (f_1, f_2, \ldots, f_m)$ denote frequency distribution of $m$ distinct haplotypes. And let $a_z(\mathbf{f},d)$, the frequency of an individual with a specific haplotype pair $Z=(z_k,z_{k'})$ be modelled as:
+Let $\mathbf{f}= (f_1, f_2, \ldots, f_k)$ denote frequency distribution of $k$ distinct haplotypes. And let $a_z(\mathbf{f},d)$, the frequency of an individual with a specific haplotype pair $Z=(h_l,h_{l'})$ be modelled as:
 
 $$a_z(\mathbf{f},d) = \left\{ \begin{array}
 {rr}
-f_k^2+df_k(1-f_k) & \mbox{if } z_k=z_{k'}  \\
-2(1-d)f_k f_{k'} &  \mbox{if } z_k \neq z_{k'} \\
+f_l^2+df_l(1-f_l) & \mbox{if } h_l=h_{l'}  \\
+2(1-d)f_l f_{l'} &  \mbox{if } h_l \neq h_{l'} \\
 \end{array} \right.,
 $$
 
@@ -141,9 +133,9 @@ where $d$ is the within-populatin inbreeding coefficient. $d=0$ denotes Hardy-We
 
 ### $\beta$
 
-To penalize unassociated haplotype effects and reduce dimension, double exponential (Laplace) distribution is used as the prior distribution for each $\beta_j$,
+To penalize unassociated haplotype effects and reduce dimension, double exponential (Laplace) distribution is used as the prior distribution for each $\beta_l$,
 
-$$\pi(\beta_j \mid \lambda) = \frac{\lambda}{2} \exp\left(-\lambda\mid\beta_j\mid\right)$$
+$$\pi(\beta_l \mid \lambda) = \frac{\lambda}{2} \exp\left(-\lambda\mid\beta_l\mid\right)$$
 
 The hyperparameter $\lambda$ controls the level of shrinkage. A larger value of $\lambda$ indicates more shrinkage.
 
@@ -155,7 +147,7 @@ $$\pi(\lambda) = b^a\Gamma(a)^{-1} \lambda^{a-1} \exp{(-b\lambda)}$$
 
 ### $\mathbf{f}$ and $d$
 
-For the parameters involved in frequency calculation, we use Dirichlet(1,1,...,1) distribution as the prior distribution for haplotype frequency distribution parameters $\mathbf{f}$. The prior distribution for the inbreeding coefficient $d$ is set as unif$(\max_k \lbrace-f_k/(1-f_k)\rbrace,1)$.
+For the parameters involved in frequency calculation, we use Dirichlet(1,1,...,1) distribution as the prior distribution for haplotype frequency distribution parameters $\mathbf{f}$. The prior distribution for the inbreeding coefficient $d$ is set as unif$(\max_l \lbrace-f_l/(1-f_l)\rbrace,1)$.
 
 ###$Z$
 
@@ -169,9 +161,9 @@ Once the Markov Chain has converged, one can carry out inference based on poster
 
 Bayes Factor is defined as the ratio between posterior odds and prior odds.
 
-Since the prior and posterior distirbutions for all $\beta_i$'s are both continuous, we cannot directly calculate the prior or posterior odds of $|\beta_i| = 0$. So, we opt to test $H_0: |\beta_j| \le \epsilon$ where $\epsilon$ is a pre-defined a small number. The odds is calculated as $P(|\beta| > \epsilon) / P(|\beta| \leq \epsilon)$ for both posterior and prior distributions. Then BF is the ratio between the two odds.
+Since the prior and posterior distirbutions for all $\beta_l$'s are both continuous, we cannot directly calculate the prior or posterior odds of $|\beta_l| = 0$. So, we opt to test $H_0: |\beta_l| \le \epsilon$ where $\epsilon$ is a pre-defined a small number. The odds is calculated as $P(|\beta| > \epsilon) / P(|\beta| \leq \epsilon)$ for both posterior and prior distributions. Then BF is the ratio between the two odds.
 
-If all posterior $\mid\beta_i\mid$ exceed $\epsilon$, then we set BF = 999 for computational considerations.
+If all posterior $\mid\beta_l\mid$ exceed $\epsilon$, then we set BF = 999 for computational considerations.
 
 ###OR and CI
 
@@ -197,7 +189,7 @@ The first 6 columns of the dataset should consist of:
 
 More information about the format can be found [here](https://www.broadinstitute.org/haploview/input-file-formats).
 
-The LBL package includes two example datasets: `fam` includes 20 case-parent trios, while `cac` includes 50 independent cases and 50 independent controls. Both datasets consist of 5 no-recombining SNPs. Below is a look of the beginning of these datasets.
+The LBL package includes two example datasets: `fam` includes 250 case-parent trios, while `cac` includes 250 independent cases and 250 independent controls. Both datasets consist of 5 no-recombining SNPs. Below is a look of the beginning of these datasets.
 
 ```{r, echo=TRUE}
 library(LBL)
@@ -206,6 +198,8 @@ data(fam)
 head(fam)
 head(cac)
 ```
+
+Note that for case-control data, father ID and mother ID are both 0.
 
 ## Other Parameters
 
