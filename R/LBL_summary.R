@@ -1,20 +1,21 @@
 #' Posterior Inference for LBL
 #'
 #' \code{LBL_summary} Provides inferences based on the posterior samples. Specifically, this function will provide posterior means,
-#' credible intervals and Bayes Factors (BF) estimates for the haplotypic effect coefficients.
+#' credible intervals, and Bayes Factors (BF) estimates for the haplotypic effect coefficients.
 #'
-#' @param output an object returned by LBL with `summary=FALSE`.
+#' @param output An object returned by LBL with `summary=FALSE`.
 #'
-#' @param a  first hyperparameter of the prior for regression coefficients,
+#' @param a  First hyperparameter of the prior for regression coefficients,
 #'    \eqn{\beta}. The prior variance of \eqn{\beta} is 2/\eqn{\lambda^2} and \eqn{\lambda} has Gamma(a,b)
 #'    prior. The Gamma prior parameters a and b are such that the mean and variance of
-#'    the Gamma distribution are \eqn{a/b} and \eqn{a/b^2}. The default value of a is 15.
+#'    the Gamma distribution are \eqn{a/b} and \eqn{a/b^2}.
+#'    The value will be transferred from LBL functions.
 #'
-#' @param b  b parameter of the Gamma(a,b) distribution described above; default
-#'    is 15.
+#' @param b  Second hyperparameter of the Gamma(a,b) distribution described above.
+#'  The value will be transferred from LBL functions.
 #'
-#' @param e a (small) number \eqn{\epsilon} in the null hypothesis of no association,
-#'    \eqn{H_0: |\beta| \le \epsilon}. The default is 0.1. Changing e from default of 0.1 may need choosing a
+#' @param e A (small) number \eqn{\epsilon} in the null hypothesis of no association,
+#'    \eqn{H_0: |\beta| \le \epsilon}. The default is 0.1. Changing e from the default of 0.1 may necessitate choosing a
 #'    different threshold for Bayes Factor (one of the outputs) to infer
 #'    association.
 #'
@@ -43,21 +44,21 @@
 
 ####Function to provide a summary of analysis based on posterior samples.
 ##including: posterior mean, CI, BF
-LBL_summary <- function(output, a=15,b=15,e=0.1, ci.level=0.95){
+LBL_summary <- function(output, a, b, e=0.1, ci.level=0.95){
   #OR estimates and CIs
   beta.out <- output$beta
   lambda.out <- output$lambda
   freq.out <- output$freq
   x.length <- ncol(beta.out)
-
-
+  
+  
   beta.ci <- exp(apply(beta.out, 2, stats::quantile, c((1-ci.level)/2, 1-(1-ci.level)/2)))
   beta.est <- exp(colMeans(beta.out))
-
+  
   freq.est <- colMeans(freq.out)
-
+  
   nreps <- nrow(beta.out)
-
+  
   #prior probability of abs(beta_j) > e
   prior.prob<-(b/(e+b))^a
   #prob.alt<-numeric(x.length)
