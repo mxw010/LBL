@@ -16,9 +16,9 @@
 #' (Bayes Factor, Credible Interval, etc.) based on the posterior samples.
 #'
 #' @section Functions:
-#' \code{\link{LBL}}:  MCMC algorithm to obtain posterior samples for independent case-control data.
-#' \code{\link{famLBL}}:  MCMC algorithm to obtain posterior samples for case-parent trio data.
-#' \code{\link{cLBL}}:  MCMC algorithm to obtain posterior samples for combined data.
+#' \code{\link{LBLcac}}  MCMC algorithm to obtain posterior samples for independent case-control data.
+#' \code{\link{LBLfam}}  MCMC algorithm to obtain posterior samples for case-parent trio data.
+#' \code{\link{LBLcombined}}  MCMC algorithm to obtain posterior samples for combined data.
 #'
 #' \code{\link{LBL_summary}} provides model summary (in the form of list) based on posterior samples.
 #' \code{\link{print_LBL_summary}} prints model summary in a user-friendly format from the list result of \code{\link{LBL_summary}}.

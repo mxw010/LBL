@@ -216,20 +216,20 @@ There are some other parameters that need to be specified for the MCMC algorithm
 
 ## LBL
 
-LBL is the original version of logistic Bayesian LASSO that detects association between common diseases and rare haplotypes. It analyzes independent case-control data. In the LBL package, the corresponding function is LBL. 
+LBL is the original version of logistic Bayesian LASSO that detects association between common diseases and rare haplotypes. It analyzes independent case-control data. In the LBL package, the corresponding function is LBLcac. 
 
-The procedure below provides a simple example of running LBL on dataset cac. cac is a sample input composed of case-control data. Note that the data is in pedigree format where the first 6 columns are: family ID, individual ID, father ID, mother ID, sex, and phenotype. Since the cases and controls are required to be independent, the family IDs of the individuals are all different. The last $2 \times p$ columns represent the genotype information of the $p$ SNPs. In this example, $p=5$.
+The procedure below provides a simple example of running LBLcac on dataset cac. cac is a sample input composed of case-control data. Note that the data is in pedigree format where the first 6 columns are: family ID, individual ID, father ID, mother ID, sex, and phenotype. Since the cases and controls are required to be independent, the family IDs of the individuals are all different. The last $2 \times p$ columns represent the genotype information of the $p$ SNPs. In this example, $p=5$.
 
-By default, the LBL function will return a list of haplotype names (haplotypes), haplotype frequencies (freq), odds ratios (OR), credible intervals of odds ratio (OR.CI), and Bayes factors (BF). For haplotypes and freq, the last value corresponds to the baseline haplotype whose OR, OR.CI, and BF cannot be calculated. If better output summary is preferred, the user can save the outcome list from LBL and call the print_LBL_summary function. Significant haplotypes will be indicated with \*+ (risk) or \*- (protective).
+By default, the LBLcac function will return a list of haplotype names (haplotypes), haplotype frequencies (freq), odds ratios (OR), credible intervals of odds ratio (OR.CI), and Bayes factors (BF). For haplotypes and freq, the last value corresponds to the baseline haplotype whose OR, OR.CI, and BF cannot be calculated. If better output summary is preferred, the user can save the outcome list from LBLcac and call the print_LBL_summary function. Significant haplotypes will be indicated with \*+ (risk) or \*- (protective).
 
-LBL can also return the entire posterior samples for all parameters. To acquire the entire samples, just set the summary parameter of LBL to be FALSE.
+LBLcac can also return the entire posterior samples for all parameters. To acquire the entire samples, just set the summary parameter of LBLcac to be FALSE.
 
 
 ```{r, echo=TRUE}
 library(LBL)
 head(cac)
 set.seed(1)
-LBL.obj<-LBL(cac,burn.in = 40000,num.it = 70000,summary = T)
+LBL.obj<-LBLcac(cac,burn.in = 40000,num.it = 70000,summary = T)
 LBL.obj
 print_LBL_summary(LBL.obj)
 ```
@@ -237,13 +237,13 @@ print_LBL_summary(LBL.obj)
 
 ## famLBL
 
-famLBL is the logistic Bayesian LASSO that uses case-parent triad (family trio) data to detect rare haplotype effects. In the LBL package, the corresponding function is famLBL. 
+famLBL is the logistic Bayesian LASSO that uses case-parent triad (family trio) data to detect rare haplotype effects. In the LBL package, the corresponding function is LBLfam. 
 
-The procedure below provides a simple example of running famLBL on dataset fam. fam is a sample input composed of case-parent triad data. Again, the data is in pedigree format where the first 6 columns are: family ID, individual ID, father ID, mother ID, sex, and phenotype. Since the data are of case-parent triad, every three individuals share the same family ID. Within the same family, the affected child's father ID will be the father's individual ID; the affected child's mother ID will be the mother's individual ID. Again, the last $2 \times p$ columns represent the genotype information of the $p$ SNPs. In this example, $p=5$.
+The procedure below provides a simple example of running LBLfam on dataset fam. fam is a sample input composed of case-parent triad data. Again, the data is in pedigree format where the first 6 columns are: family ID, individual ID, father ID, mother ID, sex, and phenotype. Since the data are of case-parent triad, every three individuals share the same family ID. Within the same family, the affected child's father ID will be the father's individual ID; the affected child's mother ID will be the mother's individual ID. Again, the last $2 \times p$ columns represent the genotype information of the $p$ SNPs. In this example, $p=5$.
 
-By default, the famLBL function will return a list of haplotype names (haplotypes), haplotype frequencies (freq), odds ratios (OR), credible intervals of odds ratio (OR.CI), and Bayes factors (BF). For haplotypes and freq, the last value corresponds to the baseline haplotype whose OR, OR.CI, and BF cannot be calculated. If better output summary is preferred, the user can save the outcome list from famLBL and call the print_LBL_summary function. Significant haplotypes will be indicated with \*+ (risk) or \*- (protective).
+By default, the LBLfam function will return a list of haplotype names (haplotypes), haplotype frequencies (freq), odds ratios (OR), credible intervals of odds ratio (OR.CI), and Bayes factors (BF). For haplotypes and freq, the last value corresponds to the baseline haplotype whose OR, OR.CI, and BF cannot be calculated. If better output summary is preferred, the user can save the outcome list from LBLfam and call the print_LBL_summary function. Significant haplotypes will be indicated with \*+ (risk) or \*- (protective).
 
-famLBL can also return the entire posterior samples for all parameters. To acquire the entire samples, just set the summary parameter of famLBL to be FALSE.
+LBLfam can also return the entire posterior samples for all parameters. To acquire the entire samples, just set the summary parameter of LBLfam to be FALSE.
 
 
 
@@ -251,7 +251,7 @@ famLBL can also return the entire posterior samples for all parameters. To acqui
 library(LBL)
 head(fam)
 set.seed(1)
-famLBL.obj<-famLBL(fam,burn.in = 40000,num.it = 70000,summary = T)
+famLBL.obj<-LBLfam(fam,burn.in = 40000,num.it = 70000,summary = T)
 famLBL.obj
 print_LBL_summary(famLBL.obj)
 ```
@@ -259,13 +259,13 @@ print_LBL_summary(famLBL.obj)
 
 ## cLBL
 
-cLBL is the latest logistic Bayesian LASSO that detects association between common diseases and rare haplotypes. It analyzes case-control and case-parent triad data simultaneously and thus take advantage of the larger sample size from the combined data. In the LBL package, the corresponding function is cLBL. 
+cLBL is the latest logistic Bayesian LASSO that detects association between common diseases and rare haplotypes. It analyzes case-control and case-parent triad data simultaneously and thus take advantage of the larger sample size from the combined data. In the LBL package, the corresponding function is LBLcombined. 
 
-The procedure below provides a simple example of running cLBL on dataset cac and fam. The first and the second parameters required from cLBL are case-parent triad and case-control data, respectively. These two dataset should be both in pedigree format. The rest parameter settings of cLBL are similar to those of LBL and famLBL.
+The procedure below provides a simple example of running LBLcombined on dataset cac and fam. The first and the second parameters required from LBLcombined are case-parent triad and case-control data, respectively. These two dataset should be both in pedigree format. The rest parameter settings of LBLcombined are similar to those of LBLcac and LBLfam.
 
-By default, the cLBL function will return a list of haplotype names (haplotypes), haplotype frequencies (freq), odds ratios (OR), credible intervals of odds ratio (OR.CI), and Bayes factors (BF). For haplotypes and freq, the last value corresponds to the baseline haplotype whose OR, OR.CI, and BF cannot be calculated. If better output summary is preferred, the user can save the outcome list from cLBL and call the print_LBL_summary function. Significant haplotypes will be indicated with \*+ (risk) or \*- (protective).
+By default, the LBLcombined function will return a list of haplotype names (haplotypes), haplotype frequencies (freq), odds ratios (OR), credible intervals of odds ratio (OR.CI), and Bayes factors (BF). For haplotypes and freq, the last value corresponds to the baseline haplotype whose OR, OR.CI, and BF cannot be calculated. If better output summary is preferred, the user can save the outcome list from LBLcombined and call the print_LBL_summary function. Significant haplotypes will be indicated with \*+ (risk) or \*- (protective).
 
-cLBL can also return the entire posterior samples for all parameters. To acquire the entire samples, just set the summary parameter of cLBL to be FALSE.
+LBLcombined can also return the entire posterior samples for all parameters. To acquire the entire samples, just set the summary parameter of LBLcombined to be FALSE.
 
 
 ```{r, echo=TRUE}
@@ -273,7 +273,7 @@ library(LBL)
 head(cac)
 head(fam)
 set.seed(1)
-cLBL.obj<-cLBL(fam,cac,burn.in = 40000,num.it = 70000,summary = T)
+cLBL.obj<-LBLcombined(fam,cac,burn.in = 40000,num.it = 70000,summary = T)
 cLBL.obj
 print_LBL_summary(cLBL.obj)
 ```
