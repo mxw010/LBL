@@ -1,6 +1,6 @@
 #' Bayesian Lasso for detecting Rare (or Common) Haplotype Association in Case-Parent triad Designs
 #'
-#' \code{famLBL} is an MCMC algorithm that generates a posterior samples for family trio data. This function
+#' \code{LBLfam} is an MCMC algorithm that generates a posterior samples for family trio data. This function
 #' takes standard pedigree format as input, and uses an algorithm based on
 #' function from \pkg{hapassoc} package to impute the (phased) haplotypes of individuals.
 #' The input does not allow missing observations and subjects with
@@ -56,7 +56,7 @@
 #'
 # @param monitor if true, will monitor the progress of the Markov Chain by
 #'    reporting progress every 5,000 iterations.
-#' @param summary Logical; if TRUE, famLBL will return a summary of the analysis. If FALSE, famLBL will return the posterior samples of MCMC.
+#' @param summary Logical; if TRUE, LBLfam will return a summary of the analysis. If FALSE, LBLfam will return the posterior samples of MCMC.
 #'  Default is set to be TRUE.
 #'
 #' @param e A (small) number \eqn{\epsilon} in the null hypothesis of no association,
@@ -95,7 +95,8 @@
 #'
 #' @examples
 #'  data(fam)
-#'  fam.obj<-famLBL(fam)
+#'  LBLfam(fam)
+#'  fam.obj<-LBLfam(fam)
 #'  fam.obj
 #'  print_LBL_summary(fam.obj)
 #'
@@ -104,7 +105,7 @@
 #' @useDynLib LBL famLBLmcmc
 #'
 #'
-famLBL <- function(data.fam, baseline="missing", start.beta = 0.01, lambda = 1, D = 0, seed = NULL, a = 15, b = 15, burn.in = 10000,
+LBLfam <- function(data.fam, baseline="missing", start.beta = 0.01, lambda = 1, D = 0, seed = NULL, a = 15, b = 15, burn.in = 10000,
                    num.it = 40000, summary=TRUE, e = 0.1, ci.level=0.95)
 {
   #still problem with I/O between R and C, disable monitor for now.
