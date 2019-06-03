@@ -1,11 +1,11 @@
 #' Logistic Bayesian Lasso for detecting Rare (and Common) Haplotyptic Association with
 #' Population Based Designs
 #'
-#' \code{LBLcac} is a Bayesian LASSO method developed to detect association between
+#' \code{LBL} is a Bayesian LASSO method developed to detect association between
 #' common/rare haplotypes and dichotomous disease phenotype, based on MCMC algorithm.
-#' The "cac" in the title stands for "case and control", as this function will handle
-#' independent cases and controls study design. For other types of study designs, see \code{\link{LBLfam}} and
-#' \code{\link{LBLcombined}}. This function takes standard pedigree format as input with an individual's
+#' This function will handle independent cases and controls study design.
+#' For other types of study designs, see \code{\link{famLBL}} and
+#' \code{\link{cLBL}}. This function takes standard pedigree format as input with an individual's
 #' genotypes, phenotype and familiar relationships, uses
 #' an algorithm developed by Burkett \emph{et al}. to impute possible haplotype configurations
 #' (for more detail, see \href{https://www.rdocumentation.org/packages/hapassoc/versions/0.5-1/topics/pre.hapassoc}{pre.hapassoc} from \pkg{hapassoc} package).
@@ -58,7 +58,7 @@
 #' @param num.it Total number of MCMC iterations including burn-in; default is
 #'    40000.
 #'
-#' @param summary Logical; if \code{TRUE}, LBLcac will return a summary of the analysis in the form of a list. If \code{FALSE}, LBLcac will return the posterior samples for all parameters.
+#' @param summary Logical; if \code{TRUE}, LBL will return a summary of the analysis in the form of a list. If \code{FALSE}, LBL will return the posterior samples for all parameters.
 #'  Default is set to be TRUE.
 #'
 #' @param e A (small) number \eqn{\epsilon} in the null hypothesis of no association,
@@ -93,11 +93,11 @@
 #'
 #'
 #' @seealso
-#' \code{\link{LBLfam}}, \code{\link{LBLcombined}}, \code{\link{LBL_summary}}.
+#' \code{\link{famLBL}}, \code{\link{cLBL}}, \code{\link{LBL_summary}}.
 #'
 #' @examples
 #'  data(cac)
-#'  cac.obj<-LBLcac(cac)
+#'  cac.obj<-LBL(cac)
 #'  cac.obj
 #'  print_LBL_summary(cac.obj)
 #'
@@ -106,7 +106,7 @@
 #'
 #' @useDynLib LBL LBLmcmc
 #'
-LBLcac <- function(data.cac, baseline="missing", a = 15, b = 15, start.beta = 0.01, lambda = 1, D = 0, seed = NULL, burn.in = 10000,
+LBL <- function(data.cac, baseline="missing", a = 15, b = 15, start.beta = 0.01, lambda = 1, D = 0, seed = NULL, burn.in = 10000,
                    num.it = 40000,summary=T, e = 0.1, ci.level=0.95)
 {
   #still problem with I/O between R and C, disable monitor for now.
