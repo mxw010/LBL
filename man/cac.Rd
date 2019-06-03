@@ -5,7 +5,7 @@
 \alias{cac}
 \title{An example file consisting of independent cases/controls}
 \format{A data frame with 500 rows (250 cases and 250 controls)
- and 16 ( = 6 fixed columns + 2 \eqn{\times} # of SNPs) columns:
+ and 16 ( = 6 fixed columns + 2 * # of SNPs) columns:
 \describe{
   \item{column 1}{family ID, integers}
   \item{column 2}{individual ID, integers}

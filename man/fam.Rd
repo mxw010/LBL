@@ -5,7 +5,7 @@
 \alias{fam}
 \title{An example file of case-parent trios}
 \format{A data frame with 750 rows (250 trios) and
- 16 ( = 6 fixed columns + 2 \eqn{\times} # of SNPs) columns:
+ 16 ( = 6 fixed columns + 2 * # of SNPs) columns:
 \describe{
   \item{column 1}{family ID, integers}
   \item{column 2}{individual ID, integers}
