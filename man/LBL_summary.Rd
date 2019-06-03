@@ -4,21 +4,22 @@
 \alias{LBL_summary}
 \title{Posterior Inference for LBL}
 \usage{
-LBL_summary(output, a = 15, b = 15, e = 0.1, ci.level = 0.95)
+LBL_summary(output, a, b, e = 0.1, ci.level = 0.95)
 }
 \arguments{
-\item{output}{an object returned by LBL with `summary=FALSE`.}
+\item{output}{An object returned by LBL with `summary=FALSE`.}
 
-\item{a}{first hyperparameter of the prior for regression coefficients,
+\item{a}{First hyperparameter of the prior for regression coefficients,
 \eqn{\beta}. The prior variance of \eqn{\beta} is 2/\eqn{\lambda^2} and \eqn{\lambda} has Gamma(a,b)
 prior. The Gamma prior parameters a and b are such that the mean and variance of
-the Gamma distribution are \eqn{a/b} and \eqn{a/b^2}. The default value of a is 15.}
+the Gamma distribution are \eqn{a/b} and \eqn{a/b^2}.
+The value will be transferred from LBL functions.}
 
-\item{b}{b parameter of the Gamma(a,b) distribution described above; default
-is 15.}
+\item{b}{Second hyperparameter of the Gamma(a,b) distribution described above.
+The value will be transferred from LBL functions.}
 
-\item{e}{a (small) number \eqn{\epsilon} in the null hypothesis of no association,
-\eqn{H_0: |\beta| \le \epsilon}. The default is 0.1. Changing e from default of 0.1 may need choosing a
+\item{e}{A (small) number \eqn{\epsilon} in the null hypothesis of no association,
+\eqn{H_0: |\beta| \le \epsilon}. The default is 0.1. Changing e from the default of 0.1 may necessitate choosing a
 different threshold for Bayes Factor (one of the outputs) to infer
 association.}
 
@@ -41,7 +42,7 @@ A list with the following components:
 }
 \description{
 \code{LBL_summary} Provides inferences based on the posterior samples. Specifically, this function will provide posterior means,
-credible intervals and Bayes Factors (BF) estimates for the haplotypic effect coefficients.
+credible intervals, and Bayes Factors (BF) estimates for the haplotypic effect coefficients.
 }
 \references{
 Biswas S, Lin S (2012). Logistic Bayesian LASSO for Identifying

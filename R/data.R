@@ -8,7 +8,7 @@
 #' @docType data
 #'
 #' @format A data frame with 750 rows (250 trios) and
-#'  16 ( = 6 fixed columns + 2 $\times$ # of SNPs) columns:
+#'  16 ( = 6 fixed columns + 2 \eqn{\times} # of SNPs) columns:
 #' \describe{
 #'   \item{column 1}{family ID, integers}
 #'   \item{column 2}{individual ID, integers}
@@ -27,8 +27,12 @@
 #' for 500 independent cases and controls, and is presented in
 #' a pedigree format to make it easier to integrate with family data.
 #'
+#' @usage data(cac)
+#'
+#' @docType data
+#'
 #' @format A data frame with 500 rows (250 cases and 250 controls)
-#'  and 16 ( = 6 fixed columns + 2 $\times$ # of SNPs) columns:
+#'  and 16 ( = 6 fixed columns + 2 \eqn{\times} # of SNPs) columns:
 #' \describe{
 #'   \item{column 1}{family ID, integers}
 #'   \item{column 2}{individual ID, integers}
@@ -39,7 +43,7 @@
 #'   \item{column 7 - 16}{marker genotypes. Each SNP is represented by two columns: one for each allele.}
 #' }
 #' @docType data
-"data(cac)"
+"cac"
 
 
 
