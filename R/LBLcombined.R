@@ -1,6 +1,6 @@
 #' Bayesian Lasso for detecting Rare (or Common) Haplotype Association in Population or Family Based Studies
 #'
-#' \code{LBLcombined} is an MCMC algorithm that generates posterior samples for a dataset containing both case-control and family trio designs. This function
+#' \code{cLBL} is an MCMC algorithm that generates posterior samples for a dataset containing both case-control and family trio designs. This function
 #' takes standard pedigree format as input, and calls \href{https://www.rdocumentation.org/packages/hapassoc/versions/0.5-1/topics/pre.hapassoc}{pre.hapassoc}
 #' function from \pkg{hapassoc} package to impute the (phased) haplotypes of individuals.
 #' The input does not allow missing observations and subjects with
@@ -64,7 +64,7 @@
 # @param verbose should the output from \code{\link[hapassoc]{pre.hapassoc}} be printed. Default is
 #    \code{FALSE}.
 #'
-#' @param summary Logical; if TRUE, LBLcombined will return a summary of the analysis. If FALSE, LBLcombined will return the posterior samples of MCMC.
+#' @param summary Logical; if TRUE, cLBL will return a summary of the analysis. If FALSE, cLBL will return the posterior samples of MCMC.
 #'  Default is set to be TRUE.
 #'
 #' @param e A (small) number \eqn{\epsilon} in the null hypothesis of no association,
@@ -109,7 +109,7 @@
 #' @examples
 #'  data(fam)
 #'  data(cac)
-#'  combined.obj<-LBLcombined(data.fam=fam,data.cac=cac)
+#'  combined.obj<-cLBL(data.fam=fam,data.cac=cac)
 #'  combined.obj
 #'
 #'  print_LBL_summary(combined.obj)
@@ -119,7 +119,7 @@
 #'
 #' @useDynLib LBL cLBLmcmc
 #'
-LBLcombined <- function(data.fam, data.cac, input.freq, baseline="missing", a = 15, b = 15, start.beta = 0.01, lambda = 1, D = 0, seed = NULL,
+cLBL <- function(data.fam, data.cac, input.freq, baseline="missing", a = 15, b = 15, start.beta = 0.01, lambda = 1, D = 0, seed = NULL,
                         burn.in = 10000, num.it = 40000, summary= TRUE, e = 0.1, ci.level=0.95)
 {
   ###urgent: need to check fam vs cc. but how?
