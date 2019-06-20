@@ -4,12 +4,10 @@
 #' a phenotype and haplotypes given the (unphased) genotypes of individuals.
 #'
 #' LBL uses Bayesian Lasso to detect rare haplotypes that are associated with common diseases. 
-#' The current implementation considers dichotomous traits.
-#' A future release will include quantitative and survival traits.
+#' The current implementation considers dichotomous traits. A future release will include quantitative and survival traits.
 #' LBL is capable of handling different study designs: this version of the software is capable of handling independent cases and controls, case-parent trios and a mixture of both (provided
-#' that the family data is independent of the case-control data). LBL uses algorithms from
-#' \pkg{\link[hapassoc:pre.hapassoc]{hapassoc}} to obtain all possible haplotype pairs compatible with an
-#' indivdiual's set of genotypes.
+#' that the family data is independent of the case-control data). LBL uses algorithms from \href{https://www.rdocumentation.org/packages/hapassoc/versions/0.5-1/topics/pre.hapassoc}{pre.hapassoc}
+#' function from \pkg{hapassoc} package to obtain all possible haplotype pairs compatible with an indivdiual's set of genotypes.
 #'
 #' The posterior samples are obtained via Markov Chain Monte Carlo (MCMC)
 #' algorithm and inference on the parameters of interest can be carried out
@@ -26,7 +24,7 @@
 #' @docType package
 #' @name LBL
 #' 
-#' 
+#' @author Swati Biswas, Meng Wang, Xiaofei Zhou, Han Zhang, Shuang Xia, Yuan Zhang, and Shili Lin
 #' @references
 #'
 #' Biswas S, Lin S (2012). Logistic Bayesian LASSO for Identifying

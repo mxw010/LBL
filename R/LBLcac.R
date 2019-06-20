@@ -86,10 +86,6 @@
 #' If \code{summary = TRUE}, return the result of LBL_summary.
 #'  For details, see the description of the \code{?LBL_summary} function.
 #'
-#' @references
-#' Biswas S, Lin S (2012). Logistic Bayesian LASSO for Identifying
-#'   Association with Rare Haplotypes and Application to Age-related Macular
-#'   Degeneration. Biometrics, 68(2): 587-97.
 #'
 #'
 #' @seealso
@@ -107,67 +103,67 @@
 #' @useDynLib LBL LBLmcmc
 #'
 LBL <- function(data.cac, baseline="missing", a = 15, b = 15, start.beta = 0.01, lambda = 1, D = 0, seed = NULL, burn.in = 10000,
-                   num.it = 40000,summary=T, e = 0.1, ci.level=0.95)
+                num.it = 40000,summary=T, e = 0.1, ci.level=0.95)
 {
   #still problem with I/O between R and C, disable monitor for now.
   #monitor: if monitor == F, do not monitor,
   #                          otherwise, monitor progress every other monitor = n iterations
-
+  
   #does not check for independency of case control data
   #user should run programs like pedstats ahead of time to make sure there is no inconsistency in the pedigree files
   #also make it so that only one affected offspring per family
-
+  
   #baseline="missing"; a = 15; b = 15; start.beta = 0.01; lambda = 1; D = 0; seed = NULL; e = 0.1; burn.in = 10000; num.it = 50000; verbose=F
-
+  
   #already taken care of this in dependency
   # if (!requireNamespace("hapassoc", quietly = TRUE)) {
   #   stop("Package \"hapassoc\" needed for this function to work. Please install it.",
   #     call. = FALSE)
   # }
-
+  
   #if fam is missing, type can't be fam or combined
-
+  
   if (missing(data.cac) ) {
     stop(paste("Must provide case-control data!\n\n"))
   }
-
+  
   if (!is.null(seed)) set.seed(seed)
-
+  
   data.cac.re <- data.cac
-
+  
   #reformat case and control
   #case=1, everything else =0
   if (!is.matrix(data.cac)) data.cac <- matrix(unlist(data.cac,use.names=F),nrow=nrow(data.cac))
   status <- ifelse(data.cac[,6] ==2, 1, 0)
   data.cac[,6] <- status
-
+  
   data.new <- data.cac
   p <- (ncol(data.new)-6)/2
   haplos.list <- pre.hapassoc(data.new, p, pooling.tol = 0, allelic = T, verbose=F)
   haplos.names <- names(haplos.list$initFreq)
-
+  
   #if (missing(input.freq)) {
   #  freq <- haplos.list$initFreq
   #} else {
   #  freq <- input.freq
   #}
   freq <- haplos.list$initFreq
-
+  
   #set baseline haplotype
   if (!(baseline %in% colnames(haplos.list$haploDM))& (baseline != "missing")) {
     warning("Baseline haplotype does not exist!\nSetting baseline haplotype as missing...")
     baseline<-"missing"
   }
-
+  
   if (baseline=="missing") {
     baseline <- haplos.names[which.max(freq)]
   }
-
+  
   column.subset <- colnames(haplos.list$haploDM) != baseline
   freq.new<-freq[column.subset]
   freq.new[length(freq.new)+1]<-freq[!column.subset]
   freq.new<-as.vector(freq.new)     #numerical frequencies with the baseline freq in the end
-
+  
   #hdat <- cbind(haplos.list$nonHaploDM[,1], haplos.list$haploDM[,column.subset])
   ID <- haplos.list$ID
   N <- sum(haplos.list$wt)
@@ -177,22 +173,22 @@ LBL <- function(data.cac, baseline="missing", a = 15, b = 15, start.beta = 0.01,
   num.haplo.id<-as.vector(table(ID))
   x.length<-as.integer(dim(x)[2])
   unique.x<-unique(x)
-
+  
   #===========end here=================#
-
+  
   # XF: these are part of input for MCMC
   beta=rep(start.beta, x.length)
   beta.out<-numeric((num.it-burn.in)*x.length)
   lambda.out<-numeric(num.it-burn.in)
   freq.out<-numeric((num.it-burn.in)*(x.length+1))     #XF: include baseline
   D.out<-numeric(num.it-burn.in)
-
+  
   out<-.C("LBLmcmc", x=as.integer(x), n=as.integer(dim(x)[1]), as.integer(y), as.integer(N), as.integer(num.haplo.id), as.integer(x.length),
           as.double(freq.new), as.double(D), as.double(beta), as.double(a), as.double(b), as.integer(t(unique.x)), as.integer(dim(unique.x)[1]),
           as.double(lambda), as.integer(num.it), as.integer(burn.in), beta.out=as.double(beta.out), lambda.out=as.double(lambda.out),
           freq.out=as.double(freq.out), D.out=as.double(D.out), monitor=as.integer(FALSE))
-
-
+  
+  
   beta.out<-matrix(out$beta.out,nrow=num.it-burn.in, byrow=TRUE)
   #beta.out <- rbind(as.vector(beta),beta.out,deparse.level=0)
   lambda.out<-matrix(out$lambda.out,nrow=num.it-burn.in, byrow=TRUE)
@@ -201,15 +197,15 @@ LBL <- function(data.cac, baseline="missing", a = 15, b = 15, start.beta = 0.01,
   #freq.out <- rbind(as.vector(freq.new), freq.out)
   haplo.names <- names(haplos.list$initFreq)[column.subset]
   haplo.names <- c(haplo.names, names(haplos.list$initFreq)[!column.subset])   #XF: uncommented this line
-
+  
   raw.output <- list(haplo.names=haplo.names, beta=beta.out, lambda=lambda.out, freq=freq.out, init.freq=freq.new)
-
+  
   if (summary==FALSE) {
     output <- raw.output
   } else {
     #calculating the Bayes Factors
     output <- LBL_summary(raw.output, a=a,b=b,e=e, ci.level=ci.level)
   }
-
+  
   return(output)
 }

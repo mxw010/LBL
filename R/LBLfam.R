@@ -84,12 +84,6 @@
 #' If \code{summary = TRUE}, return the result of LBL_summary.
 #'  For details, see the description of the \code{?LBL_summary} function.
 #'
-#' @references
-#'
-#' Wang, M., & Lin, S. (2014). FamLBL: detecting rare haplotype disease association
-#' based on common SNPs using case-parent triads. Bioinformatics, 30(18), 2611-2618.
-#'
-#'
 #' @seealso
 #' \code{\link{LBL_summary}}.
 #'
@@ -110,27 +104,27 @@ famLBL <- function(data.fam, baseline="missing", start.beta = 0.01, lambda = 1, 
   #still problem with I/O between R and C, disable monitor for now.
   #monitor: if monitor == F, do not monitor,
   #                          otherwise, monitor progress every other monitor = n iterations
-
+  
   #does not check for independency of case control data
   #user should run programs like pedstats ahead of time to make sure there is no inconsistency in the pedigree files
   #also make it so that only one affected offspring per family
-
+  
   #baseline="missing"; a = 15; b = 15; start.beta = 0.01; lambda = 1; D = 0; seed = NULL; e = 0.1; burn.in = 10000; num.it = 50000; verbose=F
-
+  
   #already taken care of this in dependency
   # if (!requireNamespace("hapassoc", quietly = TRUE)) {
   #   stop("Package \"hapassoc\" needed for this function to work. Please install it.",
   #     call. = FALSE)
   # }
-
+  
   #if fam is missing, type can't be fam or combined
   if (missing(data.fam)) {
     stop(paste("Must provide family data!\n\n"))
   }
-
+  
   if (!is.null(seed)) set.seed(seed)
-
-
+  
+  
   if (!is.matrix(data.fam)) data.fam <- matrix(unlist(data.fam,use.names=F),nrow=nrow(data.fam))
   n.fam <- length(unique(data.fam[,1]))
   #only works for trios!
@@ -151,52 +145,52 @@ famLBL <- function(data.fam, baseline="missing", start.beta = 0.01, lambda = 1, 
   }
   data.fam <- data.frame(rbind(fa[1:t,], mo[1:t,],aff[1:t,]))
   #names(data.fam.re) <- names(data.cac.re)
-
-
+  
+  
   data.new <- data.fam
-
-
+  
+  
   p <- (ncol(data.new)-6)/2
   haplos.list <- pre.hapassoc(data.new, p, pooling.tol = 0, allelic = T, verbose=F)
   haplos.names <- names(haplos.list$initFreq)
-
+  
   #if (missing(input.freq)) {
   #  freq <- haplos.list$initFreq
   #} else {
   #  freq <- input.freq
   #}
   freq <- haplos.list$initFreq
-
+  
   #set baseline haplotype
   if (!(baseline %in% colnames(haplos.list$haploDM))& (baseline != "missing")) {
     warning("Baseline haplotype does not exist!\nSetting baseline haplotype as missing...")
     baseline<-"missing"
   }
-
+  
   if (baseline=="missing") {
     baseline <- haplos.names[which.max(freq)]
   }
-
+  
   column.subset <- colnames(haplos.list$haploDM) != baseline
   freq.new<-freq[column.subset]
   freq.new[length(freq.new)+1]<-freq[!column.subset]
   freq.new<-as.vector(freq.new)     #numerical frequencies with the baseline freq in the end
-
-
+  
+  
   hap.ID <- haplos.list$ID
   ID <- hap.ID[hap.ID<=(n.fam*3)]
   N <- n.fam*2
   n <- n.fam
   x <- data.matrix(haplos.list$haploDM)[hap.ID<=(n.fam*3),]
-
+  
   fam.wt<-haplos.list$wt[hap.ID<=(n.fam*3)]
   nonunique <- unique(ID[fam.wt!= 1])
-
+  
   nonuni.fa <- nonunique[nonunique <= n]
   nonuni.mo <- nonunique[nonunique > n & nonunique <= 2*n]
   nonuni.kid <- nonunique[nonunique > 2*n]
   nonuni.family <- sort(unique(c(nonuni.fa, (nonuni.mo - n), (nonuni.kid - 2*n))))
-
+  
   xc <- xu <- NULL
   count <- 0
   num.haplo.id <- rep(1, n)
@@ -215,7 +209,7 @@ famLBL <- function(data.fam, baseline="missing", start.beta = 0.01, lambda = 1, 
             } else if (sum(judge.father) == 0) {
               judge <- 0
             } else stop("error in configuring family haplotype!")
-
+            
             if (judge > 0) {
               tmp <- x[j,] + x[k,] - x[m,]
               xc <- rbind(xc, x[m,])
@@ -232,7 +226,7 @@ famLBL <- function(data.fam, baseline="missing", start.beta = 0.01, lambda = 1, 
       xu <- rbind(xu, (x[ID == i,] + x[ID == (i + n),] - x[ID == (i + 2*n),]))
     }
   }
-
+  
   if (any(num.haplo.id==0)) {
     cat("Incompatile trios have been detected, and will be removed from analysis!\n")
     num.haplo.id <- num.haplo.id[num.haplo.id !=0]
@@ -240,41 +234,41 @@ famLBL <- function(data.fam, baseline="missing", start.beta = 0.01, lambda = 1, 
     cat("A total of", length(num.haplo.id), "families remain\n")
   } else
     cat("A total of", length(num.haplo.id), "families are in the study\n")
-
+  
   #XF: changed position
   num.haplo.id.fam <- rep(num.haplo.id,2)
   #doesn't have this in famLBL
-
-
+  
+  
   if (any(xc) < 0 | any(xu) <0) stop("Error with seperating haplotypes!")
   #error check here
-
-
+  
+  
   x <- rbind(xc, xu)
   rownames(x) <- NULL
   x <- data.matrix(x[,column.subset])
   y <- rep(1:0, c(nrow(xc), nrow(xu)))
-
+  
   x.length<-as.integer(dim(x)[2])
   unique.x<-unique(x)
-
-
+  
+  
   #===========end here=================#
-
+  
   # XF: these are part of input for MCMC
   beta=rep(start.beta, x.length)
   beta.out<-numeric((num.it-burn.in)*x.length)
   lambda.out<-numeric(num.it-burn.in)
   freq.out<-numeric((num.it-burn.in)*(x.length+1))     #XF: include baseline
   D.out<-numeric(num.it-burn.in)
-
-
+  
+  
   out<-.C("famLBLmcmc", x=as.integer(x), n=as.integer(dim(x)[1]), as.integer(y), as.integer(N), as.integer(num.haplo.id.fam),
           as.integer(x.length), as.double(freq.new), as.double(D), as.double(beta), as.double(a), as.double(b), as.integer(t(unique.x)),
           as.integer(dim(unique.x)[1]), as.double(lambda), as.integer(num.it), as.integer(burn.in), beta.out=as.double(beta.out),
           lambda.out=as.double(lambda.out), freq.out=as.double(freq.out), D.out=as.double(D.out), monitor=as.integer(FALSE))
-
-
+  
+  
   beta.out<-matrix(out$beta.out,nrow=num.it-burn.in, byrow=TRUE)
   #beta.out <- rbind(as.vector(beta),beta.out,deparse.level=0)
   lambda.out<-matrix(out$lambda.out,nrow=num.it-burn.in, byrow=TRUE)
@@ -283,15 +277,15 @@ famLBL <- function(data.fam, baseline="missing", start.beta = 0.01, lambda = 1, 
   #freq.out <- rbind(as.vector(freq.new), freq.out)
   haplo.names <- names(haplos.list$initFreq)[column.subset]
   haplo.names <- c(haplo.names, names(haplos.list$initFreq)[!column.subset])   #XF: uncommented this line
-
+  
   raw.output <- list(haplo.names=haplo.names, beta=beta.out, lambda=lambda.out, freq=freq.out, init.freq=freq.new)
-
+  
   if (summary==FALSE) {
     output <- raw.output
   } else {
     #calculating the Bayes Factors
     output <- LBL_summary(raw.output, a=a,b=b,e=e, ci.level=ci.level)
   }
-
+  
   return(output)
 }

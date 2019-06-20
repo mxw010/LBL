@@ -35,10 +35,6 @@
 #'
 #'}
 #'
-#' @references
-#' Biswas S, Lin S (2012). Logistic Bayesian LASSO for Identifying
-#'   Association with Rare Haplotypes and Application to Age-related Macular
-#'   Degeneration. Biometrics, 68(2): 587-97.
 #' @export
 #'
 
