@@ -24,7 +24,8 @@
 #' @docType package
 #' @name LBL
 #' 
-#' @author Swati Biswas, Meng Wang, Xiaofei Zhou, Han Zhang, Shuang Xia, Yuan Zhang, and Shili Lin
+#' @author Swati Biswas, Meng Wang, Xiaofei Zhou, Han Zhang, Shuang Xia, Yuan Zhang, and Shili Lin <shili@@stat.osu.edu>
+#' 
 #' @references
 #'
 #' Biswas S, Lin S (2012). Logistic Bayesian LASSO for Identifying
