@@ -112,14 +112,6 @@ samples based on Markov Chain Monte Carlo algorithm after the burn-in period.
 
 
 }
-\references{
-Biswas S, Lin S (2012). Logistic Bayesian LASSO for Identifying
-  Association with Rare Haplotypes and Application to Age-related Macular
-  Degeneration. Biometrics, 68(2): 587-97.
-
-Wang, M., & Lin, S. (2014). FamLBL: detecting rare haplotype disease association
-based on common SNPs using case-parent triads. Bioinformatics, 30(18), 2611-2618.
-}
 \seealso{
 \code{\link{LBL_summary}}.
 }

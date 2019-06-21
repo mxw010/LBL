@@ -44,8 +44,3 @@ A list with the following components:
 \code{LBL_summary} Provides inferences based on the posterior samples. Specifically, this function will provide posterior means,
 credible intervals, and Bayes Factors (BF) estimates for the haplotypic effect coefficients.
 }
-\references{
-Biswas S, Lin S (2012). Logistic Bayesian LASSO for Identifying
-  Association with Rare Haplotypes and Application to Age-related Macular
-  Degeneration. Biometrics, 68(2): 587-97.
-}
