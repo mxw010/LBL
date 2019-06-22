@@ -5,9 +5,8 @@ Version: 0.9.0
 Description: LBL uses Bayesian Lasso to detect rare haplotypes that are associated with common diseases.
     The current implementation considers dichotomous traits. A future release will include quantitative and survival traits.
     LBL is capable of handling different study designs: this version of the software is capable
-    of handling independent cases and controls, case-parent trios and a mixture of both (provided
-    that the family data is independent of the case-control data). LBL uses algorithms from pre.hapassoc
-    function from hapassoc package to obtain all possible haplotype pairs compatible with an
+    of handling independent cases and controls, case-parent trios and a mixture of both (provided that the family data is independent of the case-control data). 
+    LBL uses algorithms from pre.hapassoc function from hapassoc package to obtain all possible haplotype pairs compatible with an
     indivdiual's set of genotypes.
 Depends: R (>= 3.0.0)
 License: GPL-3
