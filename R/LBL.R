@@ -21,21 +21,21 @@
 #' \code{\link{LBL_summary}} provides model summary (in the form of list) based on posterior samples.
 #' \code{\link{print_LBL_summary}} prints model summary in a user-friendly format from the list result of \code{\link{LBL_summary}}.
 #'
-#' @docType package
-#' @name LBL
 #' 
 #' @author Swati Biswas, Meng Wang, Xiaofei Zhou, Han Zhang, Shuang Xia, Yuan Zhang, and Shili Lin <shili@@stat.osu.edu>
 #' 
 #' @references
 #'
-#' Biswas S, Lin S (2012). Logistic Bayesian LASSO for Identifying
-#'   Association with Rare Haplotypes and Application to Age-related Macular
-#'   Degeneration. Biometrics, 68(2): 587-97.
+#' Biswas S. and Lin S. (2012). Logistic Bayesian LASSO for identifying
+#'   association with rare haplotypes and application to age-related macular
+#'   degeneration. \emph{Biometrics}, 68(2): 587-97.
 #'
-#' Wang, M., & Lin, S. (2014). FamLBL: detecting rare haplotype disease association
-#' based on common SNPs using case-parent triads. Bioinformatics, 30(18), 2611-2618.
+#' Wang, M. and Lin, S. (2014). FamLBL: detecting rare haplotype disease association
+#'   based on common SNPs using case-parent triads. \emph{Bioinformatics}, 30(18), 2611-2618.
 #'
-#' Burkett, K., Graham, k. and McNeney, B. (2006). "hapassoc: Software for likelihood
-#' inference of trait associations with SNP haplotypes and other attributes."
-#' Journal of Statistical Software 16(2): 1-19.
+#' Zhou, X., Wang, M., and Lin, S. (2019). cLBL: Combined logistic Bayesian LASSO for 
+#' detecting rare associated haplotypes using independent case, control and family trio 
+#' data. \emph{Manuscript}.
+#' @docType package
+#' @name LBL-package
 NULL

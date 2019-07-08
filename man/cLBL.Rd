@@ -4,9 +4,10 @@
 \alias{cLBL}
 \title{Bayesian Lasso for detecting Rare (or Common) Haplotype Association in Population or Family Based Studies}
 \usage{
-cLBL(data.fam, data.cac, input.freq, baseline = "missing", a = 15, b = 15,
-  start.beta = 0.01, lambda = 1, D = 0, seed = NULL, burn.in = 10000,
-  num.it = 40000, summary = TRUE, e = 0.1, ci.level = 0.95)
+cLBL(data.fam, data.cac, input.freq, baseline = "missing", a = 15,
+  b = 15, start.beta = 0.01, lambda = 1, D = 0, seed = NULL,
+  burn.in = 10000, num.it = 40000, summary = TRUE, e = 0.1,
+  ci.level = 0.95)
 }
 \arguments{
 \item{data.fam}{The family portion of data. This dataset should consist of "n" rows and 6+2*p columns,
