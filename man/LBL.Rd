@@ -107,5 +107,5 @@ for all haplotypes that are consistent with the input phenotype data.
 
 }
 \seealso{
-\code{\link{famLBL}}, \code{\link{cLBL}}, \code{\link{LBL_summary}}.
+\code{\link{famLBL}}, \code{\link{cLBL}}, \code{\link{LBL_summary}}, \code{\link{print_LBL_summary}}, \code{\link{LBL-package}}.
 }

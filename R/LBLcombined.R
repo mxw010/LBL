@@ -96,7 +96,7 @@
 #'  For details, see the description of the \code{?LBL_summary} function.
 #'
 #' @seealso
-#'\code{\link{LBL_summary}}.
+#'\code{\link{LBL_summary}}, \code{\link{print_LBL_summary}}, \code{\link{LBL-package}}.
 #'
 #' @examples
 #'  data(fam)
