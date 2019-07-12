@@ -1,17 +1,14 @@
-#' Logistic Bayesian Lasso for detecting Rare (and Common) Haplotyptic Association with
+#' Logistic Bayesian Lasso for Detecting Rare (and Common) Haplotyptic Association in
 #' Population Based Designs
 #'
 #' \code{LBL} is a Bayesian LASSO method developed to detect association between
 #' common/rare haplotypes and dichotomous disease phenotype, based on MCMC algorithm.
-#' This function will handle independent cases and controls study design.
+#' This function will handle independent case/control study design.
 #' For other types of study designs, see \code{\link{famLBL}} and
 #' \code{\link{cLBL}}. This function takes standard pedigree format as input with an individual's
-#' genotypes, phenotype and familiar relationships, uses
-#' an algorithm developed by Burkett \emph{et al}. to impute possible haplotype configurations
-#' (for more detail, see \href{https://www.rdocumentation.org/packages/hapassoc/versions/0.5-1/topics/pre.hapassoc}{pre.hapassoc} from \pkg{hapassoc} package).
-#' The input does not allow missing observations, and therefore subjects with
-#' missing data are removed. This function returns an object containing summary statistics
-#' for all haplotypes that are consistent with the input phenotype data.
+#' genotypes, phenotype and familiar relationships. The input does not allow missing observations, and therefore subjects with
+#' missing data are removed. This function returns an object containing posterior
+#' samples after the burn-in period.
 #'
 #' @param data.cac Input data. data.cac should be either a data frame or a matrix,
 #'  consisting of "n" rows and 6+2*p
@@ -34,7 +31,7 @@
 #'
 #' @param a  First hyperparameter of the prior for regression coefficients,
 #'    \strong{\eqn{\beta}}. The prior variance of \eqn{\beta} is 2/\eqn{\lambda^2} and \eqn{\lambda} has Gamma(a,b)
-#'    prior. The Gamma prior parameters a and b are such that the mean and variance of
+#'    prior. The Gamma prior parameters a and b are formulated such that the mean and variance of
 #'    the Gamma distribution are \eqn{a/b} and \eqn{a/b^2}. The default value of a is 15.
 #'
 #' @param b  Second hyperparameter of the Gamma(a,b) distribution described above; default
@@ -58,7 +55,7 @@
 #' @param num.it Total number of MCMC iterations including burn-in; default is
 #'    40000.
 #'
-#' @param summary Logical; if \code{TRUE}, LBL will return a summary of the analysis in the form of a list. If \code{FALSE}, LBL will return the posterior samples for all parameters.
+#' @param summary Logical. If \code{TRUE}, LBL will return a summary of the analysis in the form of a list. If \code{FALSE}, LBL will return the posterior samples for all parameters.
 #'  Default is set to be TRUE.
 #'
 #' @param e A (small) number \eqn{\epsilon} in the null hypothesis of no association,
@@ -75,7 +72,7 @@
 #'
 #' \item{beta}{Posterior samples of betas stored in a matrix.}
 #'
-#' \item{lambda}{a vector of (num.it-burn.in) posterior samples of lambda.}
+#' \item{lambda}{A vector of (num.it-burn.in) posterior samples of lambda.}
 #'
 #' \item{freq}{Posterior samples of the frequencies of haplotypes stored in a matrix format, in the same order as haplotypes.}
 #'
@@ -84,7 +81,7 @@
 #'}
 #'
 #' If \code{summary = TRUE}, return the result of LBL_summary.
-#'  For details, see the description of the \code{?LBL_summary} function.
+#'  For details, see the description of the \code{LBL_summary} function.
 #'
 #'
 #'

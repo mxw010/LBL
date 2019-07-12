@@ -7,7 +7,7 @@
 LBL_summary(output, a, b, e = 0.1, ci.level = 0.95)
 }
 \arguments{
-\item{output}{An object returned by LBL with `summary=FALSE`.}
+\item{output}{An object returned by LBL functions (\code{\link{LBL}}, \code{\link{famLBL}}, and \code{\link{cLBL}}) with `summary=FALSE`.}
 
 \item{a}{First hyperparameter of the prior for regression coefficients,
 \eqn{\beta}. The prior variance of \eqn{\beta} is 2/\eqn{\lambda^2} and \eqn{\lambda} has Gamma(a,b)
@@ -41,6 +41,6 @@ A list with the following components:
 }
 }
 \description{
-\code{LBL_summary} Provides inferences based on the posterior samples. Specifically, this function will provide posterior means,
+\code{LBL_summary} provides inferences based on the posterior samples. Specifically, this function will return posterior means,
 credible intervals, and Bayes Factors (BF) estimates for the haplotypic effect coefficients.
 }

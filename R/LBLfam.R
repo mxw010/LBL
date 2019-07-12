@@ -1,33 +1,28 @@
-#' Bayesian Lasso for detecting Rare (or Common) Haplotype Association in Case-Parent triad Designs
+#' Bayesian Lasso for Detecting Rare (or Common) Haplotype Association in Case-Parent Triad Designs
 #'
-#' \code{famLBL} is an MCMC algorithm that generates a posterior samples for family trio data. This function
-#' takes standard pedigree format as input, and uses an algorithm based on
-#' function from \pkg{hapassoc} package to impute the (phased) haplotypes of individuals.
-#' The input does not allow missing observations and subjects with
+#' \code{famLBL} is an MCMC algorithm that generates posterior samples for family trio data. This function
+#' takes standard pedigree format as input. The input does not allow missing observations and subjects with
 #' missing data are removed. The function returns an object containing posterior
-#' samples based on Markov Chain Monte Carlo algorithm after the burn-in period.
+#' samples after the burn-in period.
 #'
-#' @param data.fam The input data. It should consist of "n" rows and 6+2*p columns,
-#'   where n is the number of individuals of case-parent trios, and p is the
+#' @param data.fam The input data. It should consist of "3n" rows and 6+2*p columns,
+#'   where n is the number of of case-parent trios, and p is the
 #'   number of SNPs.  The data should be in standard pedigree format, with the
 #'   first 6 columns representing the family ID, individual ID, father ID,
 #'   mother ID, sex, and affection status. The other 2*p columns are genotype
 #'   data in allelic format, with each allele of a SNP taking up one column.
-#'   An example can be found in this package under the name \code{"fam"}.For
-#'   more information about the format, type \code{"?fam"} into R see "Linkage Format"
+#'   An example can be found in this package under the name \code{"fam"}. For
+#'   more information about the format, type \code{"?fam"} into R, or see "Linkage Format"
 #'   section of \url{https://www.broadinstitute.org/haploview/input-file-formats}.
 #'
-# @param input.freq  optional. Specify frequency distribution of haplotypes. If
-#'   not provided, the algorithm will use the frequency estimated by hapassoc.
 #'
 #' @param baseline  Haplotype to be used for baseline coding; default is the most
-#'   frequent haplotype according to the initial haplotype frequency estimates
-#'   returned by \link{pre.hapassoc}. This argument should be a character, starting
+#'   frequent haplotype according to the initial haplotype frequency estimates. This argument should be a character, starting
 #'   with an h and followed by the baseline haplotype.
 #'
 #' @param a  First hyperparameter of the prior for regression coefficients,
 #'    \strong{\eqn{\beta}}. The prior variance of \eqn{\beta} is 2/\eqn{\lambda^2} and \eqn{\lambda} has Gamma(a,b)
-#'    prior. The Gamma prior parameters a and b are such that the mean and variance of
+#'    prior. The Gamma prior parameters a and b are formulated such that the mean and variance of
 #'    the Gamma distribution are \eqn{a/b} and \eqn{a/b^2}. The default value of a is 15.
 #'
 #' @param b  Second hyperparameter of the Gamma(a,b) distribution described above; default
@@ -51,12 +46,7 @@
 #' @param num.it Total number of MCMC iterations including burn-in; default is
 #'    40000.
 #'
-# @param verbose should the output from \code{\link[hapassoc]{pre.hapassoc}} be printed. Default is
-#'    \code{FALSE}.
-#'
-# @param monitor if true, will monitor the progress of the Markov Chain by
-#'    reporting progress every 5,000 iterations.
-#' @param summary Logical; if TRUE, famLBL will return a summary of the analysis. If FALSE, famLBL will return the posterior samples of MCMC.
+#' @param summary Logical. If TRUE, famLBL will return a summary of the analysis. If FALSE, famLBL will return the posterior samples of MCMC.
 #'  Default is set to be TRUE.
 #'
 #' @param e A (small) number \eqn{\epsilon} in the null hypothesis of no association,
@@ -73,7 +63,7 @@
 #'
 #' \item{beta}{Posterior samples of betas stored in a matrix.}
 #'
-#' \item{lambda}{a vector of (num.it-burn.in) posterior samples of lambda.}
+#' \item{lambda}{A vector of (num.it-burn.in) posterior samples of lambda.}
 #'
 #' \item{freq}{Posterior samples of the frequencies of haplotypes stored in a matrix format, in the same order as haplotypes.}
 #'
@@ -82,7 +72,7 @@
 #'}
 #'
 #' If \code{summary = TRUE}, return the result of LBL_summary.
-#'  For details, see the description of the \code{?LBL_summary} function.
+#'  For details, see the description of the \code{LBL_summary} function.
 #'
 #' @seealso
 #' \code{\link{LBL}}, \code{\link{cLBL}}, \code{\link{LBL_summary}}, \code{\link{print_LBL_summary}}, \code{\link{LBL-package}}.

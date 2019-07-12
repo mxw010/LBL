@@ -1,9 +1,9 @@
 #' Posterior Inference for LBL
 #'
-#' \code{LBL_summary} Provides inferences based on the posterior samples. Specifically, this function will provide posterior means,
+#' \code{LBL_summary} provides inferences based on the posterior samples. Specifically, this function will return posterior means,
 #' credible intervals, and Bayes Factors (BF) estimates for the haplotypic effect coefficients.
 #'
-#' @param output An object returned by LBL with `summary=FALSE`.
+#' @param output An object returned by LBL functions (\code{\link{LBL}}, \code{\link{famLBL}}, and \code{\link{cLBL}}) with `summary=FALSE`.
 #'
 #' @param a  First hyperparameter of the prior for regression coefficients,
 #'    \eqn{\beta}. The prior variance of \eqn{\beta} is 2/\eqn{\lambda^2} and \eqn{\lambda} has Gamma(a,b)

@@ -1,20 +1,18 @@
-#' Bayesian Lasso for detecting Rare (or Common) Haplotype Association in Population or Family Based Studies
+#' Bayesian Lasso for Detecting Rare (or Common) Haplotype Association in Population and Family Based Studies
 #'
 #' \code{cLBL} is an MCMC algorithm that generates posterior samples for a dataset containing both case-control and family trio designs. This function
-#' takes standard pedigree format as input, and calls \href{https://www.rdocumentation.org/packages/hapassoc/versions/0.5-1/topics/pre.hapassoc}{pre.hapassoc}
-#' function from \pkg{hapassoc} package to impute the (phased) haplotypes of individuals.
-#' The input does not allow missing observations and subjects with
+#' takes standard pedigree format as input. The input does not allow missing observations and subjects with
 #' missing data are removed. The function returns an object containing posterior
-#' samples based on Markov Chain Monte Carlo algorithm after the burn-in period.
+#' samples after the burn-in period.
 #'
-#' @param data.fam The family portion of data. This dataset should consist of "n" rows and 6+2*p columns,
-#'   where n is the number of individuals of case-parent trios, and p is the
+#' @param data.fam The family portion of data. This dataset should consist of "3n" rows and 6+2*p columns,
+#'   where n is the number of case-parent trios, and p is the
 #'   number of SNPs.  The data should be in standard pedigree format, with the
 #'   first 6 columns representing the family ID, individual ID, father ID,
 #'   mother ID, sex, and affection status. The other 2*p columns are genotype
 #'   data in allelic format, with each allele of a SNP taking up one column.
 #'   An example can be found in this package under the name \code{"fam"}. For
-#'   more information about the format, type \code{"?fam"} into R see "Linkage Format"
+#'   more information about the format, type \code{"?fam"} into R, or see "Linkage Format"
 #'   section of \url{https://www.broadinstitute.org/haploview/input-file-formats}.
 #'
 #' @param data.cac The case-control portion of data. This dataset should consist of "n" rows and 6+2*p
@@ -28,16 +26,15 @@
 #'   section of \url{https://www.broadinstitute.org/haploview/input-file-formats}.
 #'
 #' @param input.freq  Optional. Specify frequency distribution of haplotypes. If
-#'   not provided, the algorithm will use the frequency estimated by hapassoc.
+#'   not provided, the algorithm will use the estimated frequencies.
 #'
 #' @param baseline  Haplotype to be used for baseline coding; default is the most
-#'   frequent haplotype according to the initial haplotype frequency estimates
-#'   returned by \link{pre.hapassoc}. This argument should be a character, starting
+#'   frequent haplotype according to the initial haplotype frequency estimates. This argument should be a character, starting
 #'   with an h and followed by the baseline haplotype.
 #'
 #' @param a  First hyperparameter of the prior for regression coefficients,
 #'    \strong{\eqn{\beta}}. The prior variance of \eqn{\beta} is 2/\eqn{\lambda^2} and \eqn{\lambda} has Gamma(a,b)
-#'    prior. The Gamma prior parameters a and b are such that the mean and variance of
+#'    prior. The Gamma prior parameters a and b are formulated such that the mean and variance of
 #'    the Gamma distribution are \eqn{a/b} and \eqn{a/b^2}. The default value of a is 15.
 #'
 #' @param b  Second hyperparameter of the Gamma(a,b) distribution described above; default
@@ -58,13 +55,11 @@
 #'
 #' @param burn.in Burn-in period of the MCMC sampling scheme; default is 10000.
 #'
-#' @param num.it total number of MCMC iterations including burn-in; default is
+#' @param num.it Total number of MCMC iterations including burn-in; default is
 #'    40000.
 #'
-# @param verbose should the output from \code{\link[hapassoc]{pre.hapassoc}} be printed. Default is
-#    \code{FALSE}.
 #'
-#' @param summary Logical; if TRUE, cLBL will return a summary of the analysis. If FALSE, cLBL will return the posterior samples of MCMC.
+#' @param summary Logical. If TRUE, cLBL will return a summary of the analysis. If FALSE, cLBL will return the posterior samples of MCMC.
 #'  Default is set to be TRUE.
 #'
 #' @param e A (small) number \eqn{\epsilon} in the null hypothesis of no association,
@@ -72,11 +67,9 @@
 #'    different threshold for Bayes Factor (one of the outputs) to infer
 #'    association. Only used if \code{summary = TRUE}.
 #'
-#' @param ci.level Credible probability. The probability that the true value of \eqn{beta} will
+#' @param ci.level Credible probability. The probability that the true value of \eqn{\beta} will
 #'    be within the credible interval. Default is 0.95, which corresponds to a 95\% posterior credible interval. Only used if \code{summary = TRUE}.
 #'
-## @param monitor if true, will monitor the progress of the Markov Chain by
-#'    reporting progress every 5,000 iterations.
 #'
 #'@return If \code{summary = FALSE}, return a list with the following components:
 #' \describe{
@@ -84,7 +77,7 @@
 #'
 #' \item{beta}{Posterior samples of betas stored in a matrix.}
 #'
-#' \item{lambda}{a vector of (num.it-burn.in) posterior samples of lambda.}
+#' \item{lambda}{A vector of (num.it-burn.in) posterior samples of lambda.}
 #'
 #' \item{freq}{Posterior samples of the frequencies of haplotypes stored in a matrix format, in the same order as haplotypes.}
 #'
@@ -93,7 +86,7 @@
 #'}
 #'
 #' If \code{summary = TRUE}, return the result of LBL_summary.
-#'  For details, see the description of the \code{?LBL_summary} function.
+#'  For details, see the description of the \code{LBL_summary} function.
 #'
 #' @seealso
 #'\code{\link{LBL}}, \code{\link{famLBL}}, \code{\link{LBL_summary}}, \code{\link{print_LBL_summary}}, \code{\link{LBL-package}}.
@@ -103,7 +96,6 @@
 #'  data(cac)
 #'  combined.obj<-cLBL(data.fam=fam,data.cac=cac)
 #'  combined.obj
-#'
 #'  print_LBL_summary(combined.obj)
 #'
 #'

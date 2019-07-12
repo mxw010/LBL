@@ -2,10 +2,10 @@
 % Please edit documentation in R/print_LBL_summary.R
 \name{print_LBL_summary}
 \alias{print_LBL_summary}
-\title{Posterior Inference for LBL}
+\title{Posterior Inference for LBL Functions}
 \usage{
 print_LBL_summary(LBL_summary_object)
 }
 \description{
-Prints list result from LBL_summary function in a more legible fashion.
+\code{print_LBL_summary} prints list result from LBL_summary function in a more legible style.
 }

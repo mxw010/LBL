@@ -11,8 +11,8 @@
   \item{column 2}{individual ID, integers}
   \item{column 3}{father's ID, 0 for unknown father.}
   \item{column 4}{mother's ID, 0 for unknown mother.}
-  \item{column 5}{Individual's sex: 1 = male and 2 = female.}
-  \item{column 6}{Affection Status: 0 = unknown, 1 = unaffected, and 2 = affected.}
+  \item{column 5}{individual's sex: 1 = male and 2 = female.}
+  \item{column 6}{affection status: 0 = unknown, 1 = unaffected, and 2 = affected.}
   \item{column 7 - 16}{marker genotypes. Each SNP is represented by two columns: one for each allele.}
 }}
 \usage{
@@ -21,6 +21,6 @@ data(cac)
 \description{
 A dataset containing phenotypes and genotypes of 5 SNPs
 for 500 independent cases and controls, and is presented in
-a pedigree format to make it easier to integrate with family data.
+a pedigree format for easier integration with family data.
 }
 \keyword{datasets}

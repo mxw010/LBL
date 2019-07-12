@@ -2,28 +2,25 @@
 % Please edit documentation in R/LBLfam.R
 \name{famLBL}
 \alias{famLBL}
-\title{Bayesian Lasso for detecting Rare (or Common) Haplotype Association in Case-Parent triad Designs}
+\title{Bayesian Lasso for Detecting Rare (or Common) Haplotype Association in Case-Parent Triad Designs}
 \usage{
 famLBL(data.fam, baseline = "missing", start.beta = 0.01, lambda = 1,
   D = 0, seed = NULL, a = 15, b = 15, burn.in = 10000,
   num.it = 40000, summary = TRUE, e = 0.1, ci.level = 0.95)
 }
 \arguments{
-\item{data.fam}{The input data. It should consist of "n" rows and 6+2*p columns,
-  where n is the number of individuals of case-parent trios, and p is the
-  number of SNPs.  The data should be in standard pedigree format, with the
-  first 6 columns representing the family ID, individual ID, father ID,
-  mother ID, sex, and affection status. The other 2*p columns are genotype
-  data in allelic format, with each allele of a SNP taking up one column.
-  An example can be found in this package under the name \code{"fam"}.For
-  more information about the format, type \code{"?fam"} into R see "Linkage Format"
-  section of \url{https://www.broadinstitute.org/haploview/input-file-formats}.
-
-  not provided, the algorithm will use the frequency estimated by hapassoc.}
+\item{data.fam}{The input data. It should consist of "3n" rows and 6+2*p columns,
+where n is the number of of case-parent trios, and p is the
+number of SNPs.  The data should be in standard pedigree format, with the
+first 6 columns representing the family ID, individual ID, father ID,
+mother ID, sex, and affection status. The other 2*p columns are genotype
+data in allelic format, with each allele of a SNP taking up one column.
+An example can be found in this package under the name \code{"fam"}. For
+more information about the format, type \code{"?fam"} into R, or see "Linkage Format"
+section of \url{https://www.broadinstitute.org/haploview/input-file-formats}.}
 
 \item{baseline}{Haplotype to be used for baseline coding; default is the most
-frequent haplotype according to the initial haplotype frequency estimates
-returned by \link{pre.hapassoc}. This argument should be a character, starting
+frequent haplotype according to the initial haplotype frequency estimates. This argument should be a character, starting
 with an h and followed by the baseline haplotype.}
 
 \item{start.beta}{Starting value of all regression coefficients, \strong{\eqn{\beta}};
@@ -41,7 +38,7 @@ fixed to the same number.}
 
 \item{a}{First hyperparameter of the prior for regression coefficients,
 \strong{\eqn{\beta}}. The prior variance of \eqn{\beta} is 2/\eqn{\lambda^2} and \eqn{\lambda} has Gamma(a,b)
-prior. The Gamma prior parameters a and b are such that the mean and variance of
+prior. The Gamma prior parameters a and b are formulated such that the mean and variance of
 the Gamma distribution are \eqn{a/b} and \eqn{a/b^2}. The default value of a is 15.}
 
 \item{b}{Second hyperparameter of the Gamma(a,b) distribution described above; default
@@ -50,13 +47,9 @@ is 15.}
 \item{burn.in}{Burn-in period of the MCMC sampling scheme; default is 10000.}
 
 \item{num.it}{Total number of MCMC iterations including burn-in; default is
-   40000.
+40000.}
 
-   \code{FALSE}.
-
-   reporting progress every 5,000 iterations.}
-
-\item{summary}{Logical; if TRUE, famLBL will return a summary of the analysis. If FALSE, famLBL will return the posterior samples of MCMC.
+\item{summary}{Logical. If TRUE, famLBL will return a summary of the analysis. If FALSE, famLBL will return the posterior samples of MCMC.
 Default is set to be TRUE.}
 
 \item{e}{A (small) number \eqn{\epsilon} in the null hypothesis of no association,
@@ -74,7 +67,7 @@ If \code{summary = FALSE}, return a list with the following components:
 
 \item{beta}{Posterior samples of betas stored in a matrix.}
 
-\item{lambda}{a vector of (num.it-burn.in) posterior samples of lambda.}
+\item{lambda}{A vector of (num.it-burn.in) posterior samples of lambda.}
 
 \item{freq}{Posterior samples of the frequencies of haplotypes stored in a matrix format, in the same order as haplotypes.}
 
@@ -83,15 +76,13 @@ If \code{summary = FALSE}, return a list with the following components:
 }
 
 If \code{summary = TRUE}, return the result of LBL_summary.
- For details, see the description of the \code{?LBL_summary} function.
+ For details, see the description of the \code{LBL_summary} function.
 }
 \description{
-\code{famLBL} is an MCMC algorithm that generates a posterior samples for family trio data. This function
-takes standard pedigree format as input, and uses an algorithm based on
-function from \pkg{hapassoc} package to impute the (phased) haplotypes of individuals.
-The input does not allow missing observations and subjects with
+\code{famLBL} is an MCMC algorithm that generates posterior samples for family trio data. This function
+takes standard pedigree format as input. The input does not allow missing observations and subjects with
 missing data are removed. The function returns an object containing posterior
-samples based on Markov Chain Monte Carlo algorithm after the burn-in period.
+samples after the burn-in period.
 }
 \examples{
  data(fam)
