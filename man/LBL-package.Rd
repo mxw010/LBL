@@ -14,7 +14,7 @@ The current implementation considers dichotomous traits. A future release will i
 LBL is capable of handling different study designs: this version of the software is capable of handling independent cases and controls, case-parent trios and a mixture of both (provided
 that the family data is independent of the case-control data).
 
-A function from the hapassoc package is first implemented to acquire all compatible haplotypes. 
+A function from the hapassoc package is first used to acquire all compatible haplotypes. 
 The posterior samples are then obtained via Markov Chain Monte Carlo (MCMC)
 algorithm and inference on the parameters of interest can be carried out
 (Bayes Factor, Credible Interval, etc.) based on these posterior samples.
