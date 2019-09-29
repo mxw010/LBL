@@ -2,6 +2,7 @@
 #'
 #' \code{print_LBL_summary} prints list result from LBL_summary function in a more legible style.
 #'
+#' @param LBL_summary_object Summary object from \code{\link{LBL_summary}}.
 #' @export
 #'
 

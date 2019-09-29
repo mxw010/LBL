@@ -16,7 +16,16 @@
 #'   \item{column 4}{mother's ID, 0 for unknown mother.}
 #'   \item{column 5}{individual's sex. 1 = male and 2 = female.}
 #'   \item{column 6}{affection status. 0 = unknown, 1 = unaffected and 2 = affected.}
-#'   \item{column 7 - 16}{marker genotypes. Each marker is represented by two columns: one for each allele.}
+#'   \item{column 7}{}
+#'   \item{column 8}{}
+#'   \item{column 9}{}
+#'   \item{column 10}{}
+#'   \item{column 11}{}
+#'   \item{column 12}{}
+#'   \item{column 13}{}
+#'   \item{column 14}{}
+#'   \item{column 15}{}
+#'   \item{column 16}{marker genotypes. Each marker is represented by two columns: one for each allele.}
 #' }
 "fam"
 
@@ -40,7 +49,16 @@
 #'   \item{column 4}{mother's ID, 0 for unknown mother.}
 #'   \item{column 5}{individual's sex: 1 = male and 2 = female.}
 #'   \item{column 6}{affection status: 0 = unknown, 1 = unaffected, and 2 = affected.}
-#'   \item{column 7 - 16}{marker genotypes. Each SNP is represented by two columns: one for each allele.}
+#'   \item{column 7}{}
+#'   \item{column 8}{}
+#'   \item{column 9}{}
+#'   \item{column 10}{}
+#'   \item{column 11}{}
+#'   \item{column 12}{}
+#'   \item{column 13}{}
+#'   \item{column 14}{}
+#'   \item{column 15}{}
+#'   \item{column 16}{marker genotypes. Each SNP is represented by two columns: one for each allele.}
 #' }
 #' @docType data
 "cac"
