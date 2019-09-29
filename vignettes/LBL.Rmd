@@ -17,7 +17,9 @@ link-citations: yes
 csl: the-american-journal-of-human-genetics.csl
 bibliography: bibliography.bib
 vignette: |
-  %\VignetteIndexEntry{LBL} %\VignetteEncoding{UTF-8} %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteIndexEntry{LBL} 
+  %\VignetteEncoding[utf8]{inputenc}
+  %\VignetteEngine{knitr::knitr}
 ---
 
 <!-- Center titles -->
