@@ -1,5 +1,11 @@
 # LBL
-Logistic Bayesian Lasso
+Logistic and Quantitative Bayesian Lasso
+
+Install the package by
+```{r,warning=FALSE,message=FALSE,results=F}
+library(devtools)
+install_github("mxw010/LBL")
+```
 
 "This planet has - or rather had - a problem, which was this: most of the people living on it were unhappy for 
 pretty much of the time. Many solutions were suggested for this problem, but most of these were largely concerned 
