@@ -209,7 +209,7 @@ pre code {
 <li><a href="#lbl-1">LBL</a></li>
 <li><a href="#famlbl-1">famLBL</a></li>
 <li><a href="#clbl-1">cLBL</a></li>
-<li><a href="#qblbs-1">QBLbs</a></li>
+<li><a href="#qblstrat-1">QBLstrat</a></li>
 </ul></li>
 <li><a href="#references">References</a></li>
 </ul>
@@ -265,8 +265,8 @@ h4.date { /* Header 4 - and the author and data headers use this too  */
 <p>cLBL combines the independent case-control design and the case-parent triad design. With the same notations as in LBL and famLBL, the likelihood is the product of the two previous likelihoods:</p>
 <p><span class="math display">\[L_{comb}=L_{cc}(\Psi) \times L_{t}(\Psi)= \prod_{i=1}^{n_1}P(Z_i|Y_i=1,\Psi)  \prod_{i=n_1+1}^{n}P(Z_i|Y_i=0,\Psi) \prod_{j=1}^{m} \left\{P(Z_{jc}|Y_{jc}=1,\Psi) \times P(Z_{ju}|\Psi) \right\}  \]</span></p>
 </div>
-<div id="qblbs" class="section level3">
-<h3>QBLbs</h3>
+<div id="qblstrat" class="section level3">
+<h3>QBLstrat</h3>
 <p>For individuals <span class="math inline">\(i=1,2,\cdots,n\)</span>, let <span class="math inline">\(Y_i\)</span> be the quantitative trait value, <span class="math inline">\(\pmb{C}_i\)</span> be a vector of non-genetic covariates (such as age and sex) and <span class="math inline">\(\pmb{R}_i\)</span> be a vector of PC scores of length <span class="math inline">\(L\)</span> to be added to the model. The PCs are calculated from a large quantity of null markers to represent the genetic ancestry background for each individual. We consider the following complete data likelihood, <span class="math display">\[\begin{equation}
 \begin{split}
 L(\pmb{\Psi})&amp;=\prod_{i=1}^n P(Y_i,Z_i \mid \pmb{G}_i,\pmb{C}_i,\pmb{R}_i, \pmb{\Psi})\\
@@ -348,7 +348,7 @@ L(\pmb{\Psi})=\prod_{i=1}^n \frac{1}{\sqrt{2\pi \sigma_e^2}}\exp\Big\{-\frac{(Y_
 </div>
 <div id="sigma2" class="section level3">
 <h3><span class="math inline">\(\sigma^2\)</span></h3>
-<p>For QBLbs only, we consider the Inverse-Gamma<span class="math inline">\((a_e,b_e)\)</span> prior for <span class="math inline">\(\sigma^2\)</span> with pdf <span class="math display">\[\pi(\sigma^2)=\frac{b_e^{a_e}}{\Gamma(a_e)}\sigma^{2(a_e-1)}\exp(-\frac{b_e}{\sigma^2})\]</span></p>
+<p>For QBLstrat only, we consider the Inverse-Gamma<span class="math inline">\((a_e,b_e)\)</span> prior for <span class="math inline">\(\sigma^2\)</span> with pdf <span class="math display">\[\pi(\sigma^2)=\frac{b_e^{a_e}}{\Gamma(a_e)}\sigma^{2(a_e-1)}\exp(-\frac{b_e}{\sigma^2})\]</span></p>
 </div>
 </div>
 <div id="sec:inference" class="section level2">
@@ -446,11 +446,11 @@ head(cac)
 </div>
 <div id="quantitative-traits-1" class="section level2">
 <h2>Quantitative Traits</h2>
-<p>The QBLbs function is designed for rare haplotype effects estimation for quantitative traits. The data input should be either a matrix or data frame, consisting of <span class="math inline">\(n\)</span> rows (<span class="math inline">\(n\)</span> = number of individuals) and <span class="math inline">\(1 + n.cov + 2 \times p\)</span> (allelic format) or <span class="math inline">\(1 + n.cov + p\)</span> (genotypic format) columns (<span class="math inline">\(n.cov\)</span>= number of covariates and PCs, <span class="math inline">\(p\)</span>= number of SNPs). The first column is the trait, followed by the columns of covariates and PCs. If in allelic format, the other 2*p columns are allels with one column for each allele of the single-locus genotypes. If in genotypic format, the other p columns are genotypes with one column for each SNP.</p>
-<p>The LBL package includes one example dataset: QBLbsData consisting of 5 PCs and 5 SNPs for 960 individuals. Below is a look of the beginning of these datasets.</p>
+<p>The QBLstrat function is designed for rare haplotype effects estimation for quantitative traits. The data input should be either a matrix or data frame, consisting of <span class="math inline">\(n\)</span> rows (<span class="math inline">\(n\)</span> = number of individuals) and <span class="math inline">\(1 + n.cov + 2 \times p\)</span> (allelic format) or <span class="math inline">\(1 + n.cov + p\)</span> (genotypic format) columns (<span class="math inline">\(n.cov\)</span>= number of covariates and PCs, <span class="math inline">\(p\)</span>= number of SNPs). The first column is the trait, followed by the columns of covariates and PCs. If in allelic format, the other 2*p columns are allels with one column for each allele of the single-locus genotypes. If in genotypic format, the other p columns are genotypes with one column for each SNP.</p>
+<p>The LBL package includes one example dataset: QBLstratData consisting of 5 PCs and 5 SNPs for 960 individuals. Below is a look of the beginning of these datasets.</p>
 <pre class="r"><code>library(LBL)
-data(QBLbsData)
-head(QBLbsData)
+data(QBLstratData)
+head(QBLstratData)
 #&gt;            Y        PC1        PC2        PC3         PC4        PC5
 #&gt; 2  0.9116686 -0.2702250 -0.3334982 -0.2942433 -0.10333472 -0.1570381
 #&gt; 3  0.2997905 -0.2703233 -0.3345437 -0.2985917 -0.08317809 -0.1607751
@@ -691,13 +691,13 @@ print_LBL_summary(cLBL.obj)
 #&gt; ---
 #&gt; Signif.codes: Risk &#39;*+&#39; Protective &#39;*-&#39; Not significant &#39; &#39;</code></pre>
 </div>
-<div id="qblbs-1" class="section level2">
-<h2>QBLbs</h2>
-<p>QBLbs is the Quantitative Bayesian LASSO that detects rare haplotype effects with a quantitative trait while using PCs to adjust for population stratification. In the LBL package, the corresponding function is QBLbs.</p>
-<p>The procedure below provides a simple example of running QBLbs on dataset QBLbsData. QBLbsData is a sample input consisting of a quantitative trait, 5 PC scores and phenotype for 960 individuals. Again, the last <span class="math inline">\(2 \times p\)</span> columns represent the genotype information of the <span class="math inline">\(p\)</span> SNPs. In this example, <span class="math inline">\(p=5\)</span>.</p>
-<p>The QBLbs function will return a list of BF (BF), coefficient estimates (beta), credible intervals of coefficient estimates (CI.beta), credible interval of <span class="math inline">\(\lambda\)</span> (CI.lambda), credible interval of <span class="math inline">\(d\)</span> (CI.D) and haplotype frequencies (freq). For freq, the last value corresponds to the baseline haplotype whose effects are not of interest.</p>
+<div id="qblstrat-1" class="section level2">
+<h2>QBLstrat</h2>
+<p>QBLstrat is the Quantitative Bayesian LASSO that detects rare haplotype effects with a quantitative trait while using PCs to adjust for population stratification. In the LBL package, the corresponding function is QBLstrat.</p>
+<p>The procedure below provides a simple example of running QBLstrat on dataset QBLstratData. QBLstratData is a sample input consisting of a quantitative trait, 5 PC scores and phenotype for 960 individuals. Again, the last <span class="math inline">\(2 \times p\)</span> columns represent the genotype information of the <span class="math inline">\(p\)</span> SNPs. In this example, <span class="math inline">\(p=5\)</span>.</p>
+<p>The QBLstrat function will return a list of BF (BF), coefficient estimates (beta), credible intervals of coefficient estimates (CI.beta), credible interval of <span class="math inline">\(\lambda\)</span> (CI.lambda), credible interval of <span class="math inline">\(d\)</span> (CI.D) and haplotype frequencies (freq). For freq, the last value corresponds to the baseline haplotype whose effects are not of interest.</p>
 <pre class="r"><code>library(LBL)
-head(QBLbsData)
+head(QBLstratData)
 #&gt;            Y        PC1        PC2        PC3         PC4        PC5
 #&gt; 2  0.9116686 -0.2702250 -0.3334982 -0.2942433 -0.10333472 -0.1570381
 #&gt; 3  0.2997905 -0.2703233 -0.3345437 -0.2985917 -0.08317809 -0.1607751
@@ -720,8 +720,8 @@ head(QBLbsData)
 #&gt; 6      0
 #&gt; 7      0
 set.seed(1)
-QBLbs.obj&lt;-out&lt;-QBLbs(QBLbsData, numSNPs=5, cov=5)
-QBLbs.obj
+QBLstrat.obj&lt;-out&lt;-QBLstrat(QBLstratData, numSNPs=5, cov=5)
+QBLstrat.obj
 #&gt; $BF
 #&gt;    h00100    h00000    h00101    h01000    h01010    h10000 
 #&gt;  &quot;0.1137&quot;  &quot;6.5341&quot;  &quot;0.0751&quot;  &quot;0.0276&quot;  &quot;0.0686&quot;    &quot;&gt;100&quot; 

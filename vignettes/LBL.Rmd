@@ -91,7 +91,7 @@ cLBL combines the independent case-control design and the case-parent triad desi
 
 $$L_{comb}=L_{cc}(\Psi) \times L_{t}(\Psi)= \prod_{i=1}^{n_1}P(Z_i|Y_i=1,\Psi)  \prod_{i=n_1+1}^{n}P(Z_i|Y_i=0,\Psi) \prod_{j=1}^{m} \left\{P(Z_{jc}|Y_{jc}=1,\Psi) \times P(Z_{ju}|\Psi) \right\}  $$
 
-### QBLbs
+### QBLstrat
 
 For individuals $i=1,2,\cdots,n$, let $Y_i$ be the quantitative trait value, $\pmb{C}_i$ be a vector of non-genetic covariates (such as age and sex) and $\pmb{R}_i$ be a vector of PC scores of length $L$ to be added to the model. The PCs are calculated from a large quantity of null markers to represent the genetic ancestry background for each individual. We consider the following complete data likelihood,
 \begin{equation}
@@ -202,7 +202,7 @@ For the parameters involved in frequency calculation, we use Dirichlet(1,1,...,1
 For each individual $i$, we assign discrete uniform priors to all haplotypes compatible with the observed genotype. Therefore during each iteration, the haplotype will get updated according to the likelihood of each compatible haplotype pair.
 
 ### $\sigma^2$
-For QBLbs only, we consider the Inverse-Gamma$(a_e,b_e)$ prior for $\sigma^2$ with pdf
+For QBLstrat only, we consider the Inverse-Gamma$(a_e,b_e)$ prior for $\sigma^2$ with pdf
 $$\pi(\sigma^2)=\frac{b_e^{a_e}}{\Gamma(a_e)}\sigma^{2(a_e-1)}\exp(-\frac{b_e}{\sigma^2})$$
 
 
@@ -267,14 +267,14 @@ There are some other parameters that need to be specified for the MCMC algorithm
 - e: the number $\epsilon$ used as a cutoff as if $\beta$ can be treated as 0. The default is 0.1. See [Inferences on Posterior Samples](#sec:Inferences on Posterior Samples) section for details.
 
 ## Quantitative Traits
-The QBLbs function is designed for rare haplotype effects estimation for quantitative traits. The data input should be either a matrix or data frame, consisting of $n$ rows ($n$ = number of individuals) and $1 + n.cov + 2 \times p$ (allelic format) or $1 + n.cov + p$ (genotypic format) columns ($n.cov$= number of covariates and PCs, $p$= number of SNPs). The first column is the trait, followed by the columns of covariates and PCs. If in allelic format, the other 2*p columns are allels with one column for each allele of the single-locus genotypes. If in genotypic format, the other p columns are genotypes with one column for each SNP.
+The QBLstrat function is designed for rare haplotype effects estimation for quantitative traits. The data input should be either a matrix or data frame, consisting of $n$ rows ($n$ = number of individuals) and $1 + n.cov + 2 \times p$ (allelic format) or $1 + n.cov + p$ (genotypic format) columns ($n.cov$= number of covariates and PCs, $p$= number of SNPs). The first column is the trait, followed by the columns of covariates and PCs. If in allelic format, the other 2*p columns are allels with one column for each allele of the single-locus genotypes. If in genotypic format, the other p columns are genotypes with one column for each SNP.
 
-The LBL package includes one example dataset: QBLbsData consisting of 5 PCs and 5 SNPs for 960 individuals. Below is a look of the beginning of these datasets.
+The LBL package includes one example dataset: QBLstratData consisting of 5 PCs and 5 SNPs for 960 individuals. Below is a look of the beginning of these datasets.
 
 ```{r, echo=TRUE}
 library(LBL)
-data(QBLbsData)
-head(QBLbsData)
+data(QBLstratData)
+head(QBLstratData)
 ```
 
 # Example
@@ -342,20 +342,20 @@ print_LBL_summary(cLBL.obj)
 ```
 
 
-## QBLbs
+## QBLstrat
 
-QBLbs is the Quantitative Bayesian LASSO that detects rare haplotype effects with a quantitative trait while using PCs to adjust for population stratification. In the LBL package, the corresponding function is QBLbs. 
+QBLstrat is the Quantitative Bayesian LASSO that detects rare haplotype effects with a quantitative trait while using PCs to adjust for population stratification. In the LBL package, the corresponding function is QBLstrat. 
 
-The procedure below provides a simple example of running QBLbs on dataset QBLbsData. QBLbsData is a sample input consisting of a quantitative trait, 5 PC scores and phenotype for 960 individuals. Again, the last $2 \times p$ columns represent the genotype information of the $p$ SNPs. In this example, $p=5$.
+The procedure below provides a simple example of running QBLstrat on dataset QBLstratData. QBLstratData is a sample input consisting of a quantitative trait, 5 PC scores and phenotype for 960 individuals. Again, the last $2 \times p$ columns represent the genotype information of the $p$ SNPs. In this example, $p=5$.
 
-The QBLbs function will return a list of BF (BF), coefficient estimates (beta), credible intervals of coefficient estimates (CI.beta), credible interval of $\lambda$ (CI.lambda), credible interval of $d$ (CI.D) and haplotype frequencies (freq). For freq, the last value corresponds to the baseline haplotype whose effects are not of interest.
+The QBLstrat function will return a list of BF (BF), coefficient estimates (beta), credible intervals of coefficient estimates (CI.beta), credible interval of $\lambda$ (CI.lambda), credible interval of $d$ (CI.D) and haplotype frequencies (freq). For freq, the last value corresponds to the baseline haplotype whose effects are not of interest.
 
 ```{r, echo=TRUE}
 library(LBL)
-head(QBLbsData)
+head(QBLstratData)
 set.seed(1)
-QBLbs.obj<-out<-QBLbs(QBLbsData, numSNPs=5, cov=5)
-QBLbs.obj
+QBLstrat.obj<-out<-QBLstrat(QBLstratData, numSNPs=5, cov=5)
+QBLstrat.obj
 ```
 
 

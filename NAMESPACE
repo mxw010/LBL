@@ -2,7 +2,7 @@
 
 export(LBL)
 export(LBL_summary)
-export(QBLbs)
+export(QBLstrat)
 export(cLBL)
 export(famLBL)
 export(print_LBL_summary)
